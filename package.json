@@ -1,0 +1,25 @@
+{
+  "name": "roadworks",
+  "version": "0.0.1",
+  "description": "Highways England roadworks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JulianNicholls/Roadworks-Node.git"
+  },
+  "keywords": [
+    "roadworks"
+  ],
+  "author": "Julian Nicholls <juliannicholls29@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JulianNicholls/Roadworks-Node/issues"
+  },
+  "homepage": "https://github.com/JulianNicholls/Roadworks-Node#readme",
+  "dependencies": {
+    "fast-xml-parser": "^3.12.16"
+  }
+}
