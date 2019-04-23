@@ -3,28 +3,34 @@ const express = require('express');
 const parser = require('fast-xml-parser');
 
 function flattenRoadworks(jsonData) {
-  return jsonData['Report']['HE_PLANNED_ROADWORKS'][
-    'HE_PLANNED_WORKS_Collection'
-  ]['HE_PLANNED_WORKS'].reduce((works, cur) => {
-    const eastNorth =
-      cur['EASTNORTH']['Report']['EASTINGNORTHING']['EASTNORTH_Collection'][
-        'EASTNORTH'
-      ];
+  return jsonData.Report.HE_PLANNED_ROADWORKS.HE_PLANNED_WORKS_Collection.HE_PLANNED_WORKS.reduce(
+    (works, cur) => {
+      const eastNorth =
+        cur.EASTNORTH.Report.EASTINGNORTHING.EASTNORTH_Collection.EASTNORTH;
 
-    const item = {
-      startDate: new Date(cur.SDATE),
-      endDate: new Date(cur.SDATE),
-      expectedDelay: cur.EXPDEL,
-      description: cur.DESCRIPTION,
-      closureType: cur.CLOSURE_TYPE,
-      centreEasting: eastNorth.CENTRE_EASTING,
-      centreNorthing: eastNorth.CENTRE_NORTHING,
-    };
+      let roads = cur.ROADS.Report.ROADS.ROAD_Collection.ROAD;
 
-    works.push(item);
+      roads =
+        roads.ROAD_NUMBER ||
+        roads.map(({ ROAD_NUMBER }) => ROAD_NUMBER).join(' ');
 
-    return works;
-  }, []);
+      const item = {
+        startDate: new Date(cur.SDATE),
+        endDate: new Date(cur.SDATE),
+        expectedDelay: cur.EXPDEL,
+        description: cur.DESCRIPTION,
+        closureType: cur.CLOSURE_TYPE,
+        centreEasting: eastNorth.CENTRE_EASTING,
+        centreNorthing: eastNorth.CENTRE_NORTHING,
+        roads,
+      };
+
+      works.push(item);
+
+      return works;
+    },
+    []
+  );
 }
 
 const app = express();
@@ -52,8 +58,8 @@ if (validObj !== true) {
 const roadworks = parser.parse(xmlData, parserOptions);
 
 app.get('/', (req, res, next) => {
-  res.status(200).json(roadworks);
-  // res.status(200).json(flattenRoadworks(roadworks));
+  // res.status(200).json(roadworks);
+  res.status(200).json(flattenRoadworks(roadworks));
 });
 
 app.listen(process.env.POST || 3050, () => {
