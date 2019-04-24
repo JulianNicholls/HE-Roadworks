@@ -18,7 +18,7 @@ function flattenRoadworks(jsonData) {
         startDate: new Date(cur.SDATE),
         endDate: new Date(cur.EDATE),
         expectedDelay: cur.EXPDEL,
-        description: cur.DESCRIPTION,
+        description: cur.DESCRIPTION.replace(/&#xD;&#xA;/g, '\n'),
         closureType: cur.CLOSURE_TYPE,
         centreEasting: eastNorth.CENTRE_EASTING,
         centreNorthing: eastNorth.CENTRE_NORTHING,
@@ -66,4 +66,4 @@ app.get('/', (req, res, next) => {
 //   console.log('Raw JSON server running');
 // });
 
-console.log(JSON.stringify(flattenRoadworks(roadworks)));
+console.log(JSON.stringify(flattenRoadworks(roadworks), null, 2));
