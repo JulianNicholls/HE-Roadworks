@@ -2,6 +2,13 @@
   --body: #eee;
   --text: #505050;
   --link: #0e3ea0;
+
+  --a-road: #134A22;
+  --a-road-text: #f8ae25;
+  --highlight: #ffff88;
+  --date-highlight: #000080;
+
+  --motorway: #004A9D;
 }
 
 *, *::before, *::after {
@@ -37,4 +44,29 @@ h1 {
 
 .centred {
   text-align: center;
+}
+
+article {
+  border: 5px solid white;
+  border-radius: 1rem;
+  color: white;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  white-space: pre-line;
+}
+
+article h2 {
+  font-size: 1.5rem;
+}
+
+article.a-road {
+  background: var(--a-road);
+}
+
+article.a-road h2 {
+  color: var(--a-road-text);
+}
+
+article.motorway {
+  background: var(--motorway);
 }

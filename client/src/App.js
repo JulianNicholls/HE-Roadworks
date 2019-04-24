@@ -4,10 +4,10 @@ import RoadworksList from './components/RoadworksList';
 function App() {
   return (
     <div className="App">
-      <div className="container">
+      <main className="container">
         <h1 className="centred">Roadworks</h1>
         <RoadworksList />
-      </div>
+      </main>
     </div>
   );
 }
