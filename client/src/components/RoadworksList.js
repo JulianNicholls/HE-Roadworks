@@ -1,23 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import moment from 'moment';
 
-import roadworks from '../data/roadworks.json';
+import { WorksContext } from '../Context';
 
 moment.locale('en-gb');
 
 const dateFormat = 'D MMM YYYY';
 
 const RoadworksList = () => {
-  const numRegex = /^[AM](\d{1,3})/;
+  const { roadworks, roads } = useContext(WorksContext);
 
-  roadworks.sort((a, b) => {
-    if (a.roads[0] !== b.roads[0]) return a.roads[0] < b.roads[0] ? 1 : -1;
-
-    const left = a.roads.match(numRegex)[1];
-    const right = b.roads.match(numRegex)[1];
-
-    return Number(left) - Number(right);
-  });
+  console.log({ roads });
 
   return (
     <section>
