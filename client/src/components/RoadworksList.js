@@ -39,7 +39,14 @@ const RoadworksList = () => {
 
         return (
           <article className={roadClass} key={index}>
-            <h2>{roads}</h2>
+            <header>
+              <h2>{roads}</h2>
+              <span>{expectedDelay}</span>
+              <span>{closureType}</span>
+            </header>
+            <p>
+              Location: {centreEasting} {centreNorthing}
+            </p>
             <p>{description}</p>
             <span className="duration">
               Duration: {sdate.format(dateFormat)} - {edate.format(dateFormat)}

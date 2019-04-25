@@ -1,6 +1,6 @@
 :root {
-  --body: #eee;
-  --text: #505050;
+  --body: hsl(0, 0%, 82%);
+  --text: hsl(0, 0%, 23%);
   --link: #0e3ea0;
 
   --a-road: #134A22;
@@ -16,13 +16,13 @@
 }
 
 body {
-  background:var(--body);
+  background: var(--body);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
       sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 0.5rem 0 0 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -53,6 +53,12 @@ article {
   padding: 1rem;
   margin-bottom: 0.5rem;
   white-space: pre-line;
+}
+
+article header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  align-items: center;
 }
 
 article h2 {
