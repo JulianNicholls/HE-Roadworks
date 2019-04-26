@@ -8,9 +8,7 @@ moment.locale('en-gb');
 const dateFormat = 'D MMM YYYY';
 
 const RoadworksList = () => {
-  const { roadworks, roads } = useContext(WorksContext);
-
-  console.log({ roads });
+  const { roadworks } = useContext(WorksContext);
 
   return (
     <section>
