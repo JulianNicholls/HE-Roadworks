@@ -8,11 +8,13 @@ moment.locale('en-gb');
 const dateFormat = 'D MMM YYYY';
 
 const RoadworksList = () => {
-  const { roadworks } = useContext(WorksContext);
+  const { selectedRoadworks } = useContext(WorksContext);
+
+  console.log(selectedRoadworks());
 
   return (
     <section>
-      {roadworks.map((item, index) => {
+      {selectedRoadworks().map((item, index) => {
         const {
           roads,
           description,
