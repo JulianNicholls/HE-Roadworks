@@ -10,8 +10,6 @@ const dateFormat = 'D MMM YYYY';
 const RoadworksList = () => {
   const { selectedRoadworks } = useContext(WorksContext);
 
-  console.log(selectedRoadworks());
-
   return (
     <section>
       {selectedRoadworks().map((item, index) => {
