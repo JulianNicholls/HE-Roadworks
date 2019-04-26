@@ -2,13 +2,28 @@ const fs = require('fs');
 const express = require('express');
 const parser = require('fast-xml-parser');
 
-const replacements = {
-  Junction: /jct/i,
-  Junction: /jct jct/i,
-  Junction: /jn/i,
-  '\n': /&#xD;&#xA;/,
-  '\n': /&#xD;/,
-  '\n': /&#xA;/,
+const correctTypos = description => {
+  const replacements = [
+    { regex: /jct jct/gi, replacement: 'Junction' },
+    { regex: /jct/gi, replacement: 'Junction' },
+    { regex: /jn/gi, replacement: 'Junction' },
+    { regex: /&#xD;&#xA;/g, replacement: '\n' },
+    { regex: /&#xA;/g, replacement: '\n' },
+    { regex: /&#xD;/g, replacement: '\n' },
+    { regex: /hardshoulder/g, replacement: 'hard shoulder' },
+    { regex: /\s+&amp;\s+/g, replacement: ' and ' },
+    { regex: /\s+&\s+/g, replacement: ' and ' },
+    { regex: /\s+southbound\s+/g, replacement: ' Southbound ' },
+    { regex: /\s+northbound\s+/g, replacement: ' Northbound ' },
+    { regex: /\s+eastbound\s+/g, replacement: ' Eastbound ' },
+    { regex: /\s+westbound\s+/g, replacement: ' Westbound ' },
+    { regex: /\s+SB\s+/gi, replacement: ' Southbound ' },
+    { regex: /\s+NB\s+/gi, replacement: ' Northbound ' },
+  ];
+
+  return replacements.reduce((desc, { regex, replacement }) => {
+    return desc.replace(regex, replacement);
+  }, description);
 };
 
 function flattenRoadworks(jsonData) {
@@ -23,11 +38,13 @@ function flattenRoadworks(jsonData) {
         roads.ROAD_NUMBER ||
         roads.map(({ ROAD_NUMBER }) => ROAD_NUMBER).join(' ');
 
+      const description = correctTypos(cur.DESCRIPTION);
+
       const item = {
         startDate: new Date(cur.SDATE),
         endDate: new Date(cur.EDATE),
         expectedDelay: cur.EXPDEL,
-        description: cur.DESCRIPTION.replace(/&#xD;&#xA;/g, '\n'),
+        description,
         closureType: cur.CLOSURE_TYPE,
         centreEasting: eastNorth.CENTRE_EASTING,
         centreNorthing: eastNorth.CENTRE_NORTHING,
