@@ -10,11 +10,13 @@ const SelectionPanel = () => {
   };
 
   return (
-    <div class="selection-panel">
+    <div className="selection-panel">
       <label htmlFor="road">Road</label>
       <select id="road" onChange={changeRoad}>
-        {roads.map(({ roads }) => (
-          <option value={roads}>{roads}</option>
+        {roads.map(({ roads }, index) => (
+          <option key={index} value={roads}>
+            {roads}
+          </option>
         ))}
       </select>
     </div>
