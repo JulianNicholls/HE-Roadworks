@@ -66,10 +66,15 @@ label {
 .selection-panel {
   border: 2px solid white;
   border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 12rem;
+  justify-content: space-between;
   padding: 1rem;
 }
 
-.selection-panel select {
+.selection-panel select,
+.selection-panel input[type="text"] {
   font-size: 1.2rem;
   padding: 0.3rem 0.5rem;
   width: 100%;
