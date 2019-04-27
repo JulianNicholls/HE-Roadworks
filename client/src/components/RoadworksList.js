@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import moment from 'moment';
 
-import { WorksContext } from '../Context';
+import { WorksContext } from '../context';
 
 moment.locale('en-gb');
 

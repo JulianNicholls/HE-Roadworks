@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import roadworks from './data/roadworks.json';
+import roadworks from '../data/roadworks.json';
 
 export const WorksContext = React.createContext();
 
@@ -29,19 +29,23 @@ export const Provider = ({ children }) => {
   };
 
   const selectedRoadworks = () => {
+    let retval = [];
+
     if (selected !== '') {
       const roadIndex = roads.findIndex(element => element.roads === selected);
-      const retval = [];
 
       for (let i = roads[roadIndex].index; i < roads[roadIndex + 1].index; ++i) {
         retval.push(roadworks[i]);
       }
-
-      return retval;
     } else if (searchText !== '') {
-      console.log('Should be searching');
-    } // Not ready yet
-    else return [];
+      const st = searchText.toLocaleLowerCase();
+
+      retval = roadworks.filter(({ description }) =>
+        description.toLocaleLowerCase().includes(st)
+      );
+    }
+
+    return retval;
   };
 
   useEffect(initialLoad, []);

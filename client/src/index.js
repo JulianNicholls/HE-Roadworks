@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
-import { Provider } from './Context.js';
+import { Provider } from './context';
 
 import * as serviceWorker from './serviceWorker';
 
