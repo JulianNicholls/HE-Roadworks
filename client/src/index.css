@@ -1,6 +1,7 @@
 :root {
   --body: hsl(0, 0%, 82%);
   --text: hsl(0, 0%, 23%);
+  --header: hsl(0, 0%, 68%);
   --link: #0e3ea0;
 
   --a-road: #134A22;
@@ -23,7 +24,7 @@ body {
       sans-serif;
       line-height: 1.5;
   margin: 0;
-  padding: 0.5rem 0 0 0;
+  padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -34,11 +35,18 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: 2rem;
-  margin-bottom: 0.5em;
 }
 
 label {
   font-size: 1.2rem;
+}
+
+header.header {
+  background: var(--header);
+  height: 3rem;
+  line-height: 3rem;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
 }
 
 .container {
@@ -74,7 +82,7 @@ label {
 }
 
 .selection-panel select,
-.selection-panel input[type="text"] {
+.selection-panel input[type="search"] {
   font-size: 1.2rem;
   padding: 0.3rem 0.5rem;
   width: 100%;

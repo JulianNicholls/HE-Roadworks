@@ -19,7 +19,7 @@ const SelectionPanel = () => {
 
     setLocation(newLoc);
 
-    if (newLoc.length > 2) {
+    if (newLoc.length > 1) {
       setSelected('');
       setSearchText(newLoc);
     }
@@ -29,7 +29,8 @@ const SelectionPanel = () => {
     <div className="selection-panel">
       <div>
         <label htmlFor="road">Road</label>
-        <select id="road" onChange={changeRoad} defaultValue={selected}>
+        <select id="road" onChange={changeRoad} value={selected}>
+          <option value="">&nbsp;</option>
           {roads.map(({ roads }, index) => (
             <option key={index} value={roads}>
               {roads}
@@ -40,7 +41,7 @@ const SelectionPanel = () => {
       <div>
         <label htmlFor="location">Location</label>
         <input
-          type="text"
+          type="search"
           id="location"
           value={location}
           onChange={newLocation}
