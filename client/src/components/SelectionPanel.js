@@ -8,17 +8,21 @@ const SelectionPanel = () => {
   );
   const [location, setLocation] = useState('');
 
+  // When selecting a road, remove the search text from here and the context
   const changeRoad = e => {
     setSelected(e.target.value);
     setLocation('');
     setSearchText('');
   };
 
+  // When entering search text, remove the selected road from the context
   const newLocation = e => {
     const newLoc = e.target.value;
 
     setLocation(newLoc);
 
+    // Only start searching after two characters. I was going to make it three,
+    // but searching for e.g. BT is a valid thing to do.
     if (newLoc.length > 1) {
       setSelected('');
       setSearchText(newLoc);
@@ -26,7 +30,7 @@ const SelectionPanel = () => {
   };
 
   return (
-    <div className="selection-panel">
+    <section className="selection-panel">
       <div>
         <label htmlFor="road">Road</label>
         <select id="road" onChange={changeRoad} value={selected}>
@@ -39,7 +43,7 @@ const SelectionPanel = () => {
         </select>
       </div>
       <div>
-        <label htmlFor="location">Location</label>
+        <label htmlFor="location">Search</label>
         <input
           type="search"
           id="location"
@@ -47,7 +51,7 @@ const SelectionPanel = () => {
           onChange={newLocation}
         />
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,5 +1,6 @@
 :root {
   --body: hsl(0, 0%, 82%);
+  --top-section: hsl(0, 0%, 90%);
   --text: hsl(0, 0%, 23%);
   --header: hsl(0, 0%, 68%);
   --link: #0e3ea0;
@@ -18,6 +19,8 @@
 
 body {
   background: var(--body);
+  background-attachment: fixed;
+  background-size: cover;
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -34,7 +37,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 2rem;
+  color: var(--a-road);
+  font-size: 1.5rem;
+  letter-spacing: -1px;
 }
 
 label {
@@ -43,8 +48,8 @@ label {
 
 header.header {
   background: var(--header);
-  height: 3rem;
-  line-height: 3rem;
+  height: 2.2rem;
+  line-height: 2.2rem;
   margin-bottom: 1rem;
   padding: 0 1rem;
 }
@@ -67,13 +72,14 @@ header.header {
 }
 
 .introduction {
-  background: white;
-  padding: 1rem;
+  background: var(--top-section);
+  border: 2px solid white;
+  padding: 0 1rem;
 }
 
 .selection-panel {
+  background: var(--top-section);
   border: 2px solid white;
-  border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
   height: 12rem;
