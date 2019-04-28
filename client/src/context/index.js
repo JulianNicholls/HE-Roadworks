@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import roadworksData from '../data/roadworks.json';
-
 const weekms = 7 * 86400 * 1000; // A week of milliseconds
 const now = Date.now();
 const weekAgo = now - weekms;
@@ -15,39 +13,46 @@ export const Provider = ({ children }) => {
   const [selected, setSelected] = useState('');
   const [searchText, setSearchText] = useState('');
 
-  const initialLoad = () => {
-    // Filter the roadworks so that
-    //   (a) They start before 7 days time.
-    //   (b) They haven't been over for more than a week.
+  const initialLoad = async () => {
+    try {
+      const response = await fetch('/data/roadworks.json');
+      const roadworksData = await response.json();
 
-    const filteredRoadworks = roadworksData.filter(({ startDate, endDate }) => {
-      const sdate = Date.parse(startDate);
-      const edate = Date.parse(endDate);
+      // Filter the roadworks so that
+      //   (a) They start before 7 days time.
+      //   (b) They haven't been over for more than a week.
 
-      if (sdate > weeksTime || edate < weekAgo)
-        console.log({ startDate, endDate });
+      const filteredRoadworks = roadworksData.filter(({ startDate, endDate }) => {
+        const sdate = Date.parse(startDate);
+        const edate = Date.parse(endDate);
 
-      return sdate <= weeksTime && edate >= weekAgo;
-    });
+        if (sdate > weeksTime || edate < weekAgo)
+          console.log({ startDate, endDate });
 
-    setRoadworks(filteredRoadworks);
+        return sdate <= weeksTime && edate >= weekAgo;
+      });
 
-    // Collect the unique roads and their index in the list
-    let lastRoads = { roads: '', index: 0 };
+      setRoadworks(filteredRoadworks);
 
-    const roadList = filteredRoadworks.reduce((acc, { roads }, index) => {
-      if (roads !== lastRoads.roads) {
-        const newValue = { roads, index };
+      // Collect the unique roads and their index in the list
+      let lastRoads = { roads: '', index: 0 };
 
-        acc.push(newValue);
-        lastRoads = newValue;
-      }
+      const roadList = filteredRoadworks.reduce((acc, { roads }, index) => {
+        if (roads !== lastRoads.roads) {
+          const newValue = { roads, index };
 
-      return acc;
-    }, []);
+          acc.push(newValue);
+          lastRoads = newValue;
+        }
 
-    setRoads(roadList);
-    setSelected(roadList[0].roads); // Default to first of list
+        return acc;
+      }, []);
+
+      setRoads(roadList);
+      setSelected(roadList[0].roads); // Default to first of list
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const selectedRoadworks = () => {
@@ -70,7 +75,9 @@ export const Provider = ({ children }) => {
     return retval;
   };
 
-  useEffect(initialLoad, []);
+  useEffect(() => {
+    initialLoad();
+  }, []);
 
   const state = {
     roadworks,
