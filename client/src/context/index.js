@@ -34,6 +34,7 @@ export const Provider = ({ children }) => {
       let lastRoads = { roads: '', index: 0 };
 
       const roadList = filteredRoadworks.reduce((acc, { roads }, index) => {
+        if (roads.startsWith('A511')) console.log({ index, roads });
         if (roads !== lastRoads.roads) {
           const newValue = { roads, index };
 
@@ -56,8 +57,12 @@ export const Provider = ({ children }) => {
 
     if (selected !== '') {
       const roadIndex = roads.findIndex(element => element.roads === selected);
+      const max =
+        roadIndex < roads.length - 1
+          ? roads[roadIndex + 1].index
+          : roadworks.length;
 
-      for (let i = roads[roadIndex].index; i < roads[roadIndex + 1].index; ++i) {
+      for (let i = roads[roadIndex].index; i < max; ++i) {
         retval.push(roadworks[i]);
       }
     } else if (searchText !== '') {
