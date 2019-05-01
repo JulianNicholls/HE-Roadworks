@@ -30,7 +30,7 @@ const cleanup = description => {
   }, description);
 };
 
-// The wrinkle if the sorting is that there are entries like 'M27 M271' which
+// The wrinkle in the sorting is that there are entries like 'M27 M271' which
 // would need to be sorted between 'M27' and 'M27 M3'. There are actually entries
 // that have more than two roads, but they tend to be more or less unique.
 
@@ -71,6 +71,7 @@ function flattenRoadworks(jsonData) {
 
       let roads = cur.ROADS.Report.ROADS.ROAD_Collection.ROAD;
 
+      // Turn roads into a comma-separayted string if there is more than one road
       roads =
         roads.ROAD_NUMBER ||
         roads.map(({ ROAD_NUMBER }) => ROAD_NUMBER).join(' ');
@@ -95,11 +96,7 @@ function flattenRoadworks(jsonData) {
     []
   );
 
-  // Sort the roadworks:
-  //  First, the Motorways in numerical order
-  //  Then, the A roads, likewise in numerical order
-
-  rawData.sort(compare);
+  rawData.sort(compare); // Sort the roads
 
   return rawData;
 }
@@ -131,17 +128,17 @@ if (validObj !== true) {
   process.exit(-1);
 }
 
-const roadworks = parser.parse(xmlData, parserOptions);
+const roadworks = flattenRoadworks(parser.parse(xmlData, parserOptions));
 
 if (serving) {
   app.get('/', (req, res, next) => {
     // res.status(200).json(roadworks);
-    res.status(200).json(flattenRoadworks(roadworks));
+    res.status(200).json(roadworks);
   });
 
   app.listen(process.env.POST || 3050, () => {
     console.log('Raw JSON server running on port 3050');
   });
 } else {
-  console.log(JSON.stringify(flattenRoadworks(roadworks), null, 2));
+  console.log(JSON.stringify(roadworks, null, 2));
 }
