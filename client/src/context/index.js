@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 const weekms = 7 * 86400 * 1000; // A week of milliseconds
 const now = Date.now(); // Now, obviously :-)
 const weekAgo = now - weekms; // A week ago
-const weeksTime = now + weekms; // A week's time
+const weeksTime = now + weekms * 2; // Two week's time
 
 export const WorksContext = React.createContext();
 
@@ -34,7 +34,6 @@ export const Provider = ({ children }) => {
       let lastRoads = { roads: '', index: 0 };
 
       const roadList = filteredRoadworks.reduce((acc, { roads }, index) => {
-        if (roads.startsWith('A511')) console.log({ index, roads });
         if (roads !== lastRoads.roads) {
           const newValue = { roads, index };
 
