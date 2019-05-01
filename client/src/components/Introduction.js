@@ -34,9 +34,9 @@ const Introduction = () => {
       </p>
       <p>
         You can find information by road number, or search descriptions. The
-        listed roadworks have already started or will start within the next week.
-        Roadworks which should have been completed at least a week ago are
-        filtered out (hopeful, I know).
+        listed roadworks have already started or will start within the next two
+        weeks. Roadworks which should have been completed at least a week ago are
+        not shown (hopeful, I know).
       </p>
     </section>
   );
