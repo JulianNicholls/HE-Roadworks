@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/JulianNicholls/Roadworks-Node#readme",
   "dependencies": {
-    "fast-xml-parser": "^3.12.16"
+    "fast-xml-parser": "^3.12.16",
+    "prop-types": "^15.7.2"
   },
   "devDependencies": {
     "express": "^4.16.4"
