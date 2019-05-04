@@ -54,7 +54,6 @@ header.header {
   display: flex;
   justify-content: space-between;
   height: 2.4rem;
-  line-height: 2.4rem;
   padding: 0 1rem;
   position: fixed;
   top: 0;
@@ -76,7 +75,7 @@ nav a {
   color: var(--header-nav);
   font-size: 0.9rem;
   text-decoration: none;
-  text-shadow: rgba(0, 0, 0, 0.7) 0px 0px 4px;
+  text-shadow: rgba(0, 0, 0, 0.7) 1px 1px 4px;
 }
         
 nav a:hover {
@@ -152,4 +151,10 @@ article.a-road h2 {
 
 article.motorway {
   background: var(--motorway);
+}
+
+@media (max-width: 900px) {
+  article header {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
