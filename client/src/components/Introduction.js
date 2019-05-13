@@ -25,8 +25,8 @@ const Introduction = () => {
       </p>
 
       <p>
-        Presented here is the latest data on planned roadworks on Highways
-        England's roads, distilled from the latest data file on{' '}
+        These are the latest planned roadworks on Highways England's roads, loaded
+        from the latest data file on{' '}
         <a href={dataPage} title="dataset">
           this&nbsp;page
         </a>
