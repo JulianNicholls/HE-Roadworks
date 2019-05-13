@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const weekms = 7 * 86400 * 1000; // A week of milliseconds
-const now = Date.now(); // Now, obviously :-)
-const weekAgo = now - weekms; // A week ago
-const weeksTime = now + weekms * 2; // Two week's time
+import { inTheLastWeek, inTheNextFortnight } from '../dateRanges';
 
 export const WorksContext = React.createContext();
 
@@ -22,10 +19,7 @@ export const Provider = ({ children }) => {
       //   (a) They start before 7 days time.
       //   (b) They haven't been over for more than a week.
       const filteredRoadworks = roadworksData.filter(({ startDate, endDate }) => {
-        const sdate = Date.parse(startDate);
-        const edate = Date.parse(endDate);
-
-        return sdate <= weeksTime && edate >= weekAgo;
+        return inTheNextFortnight(startDate) && inTheLastWeek(endDate);
       });
 
       setRoadworks(filteredRoadworks);
