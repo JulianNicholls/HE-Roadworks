@@ -158,8 +158,9 @@ article.a-road {
 }
 
 article.a-road h2 {
-  font-family: "Transport Medium", sans-serif;
   color: var(--a-road-text);
+  font-family: "Transport Medium", sans-serif;
+  font-size: 1.4rem;
 }
 
 article span i {
