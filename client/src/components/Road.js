@@ -10,6 +10,7 @@ const dateFormat = 'D MMM YYYY';
 const BGSSite =
   'https://www.bgs.ac.uk/data/webservices/CoordConvert_LL_BNG.cfc?method=BNGtoLatLng&easting=';
 
+const openProxy = 'https://cors-anywhere.herokuapp.com';
 const Road = ({ item }) => {
   const {
     roads,
@@ -23,13 +24,14 @@ const Road = ({ item }) => {
   } = item;
 
   const openMap = async (east, north) => {
-    const response = await fetch(`${BGSSite}${east}&northing=${north}`, {
-      mode: 'no-cors',
-    });
-    const data = await response.json();
+    try {
+      const response = await fetch(`${openProxy}/${BGSSite}${east}&northing=${north}`);
+      const data = await response.json();
 
-    const { LONGITUDE, LATITUDE } = data;
-    console.log({ east, north, LONGITUDE, LATITUDE });
+      const { LONGITUDE, LATITUDE } = data;
+      console.log({ east, north, LONGITUDE, LATITUDE });
+    }
+    catch(e) { console.error(e);};
   };
 
   const roadClass = roads[0] === 'A' ? 'a-road' : 'motorway';
