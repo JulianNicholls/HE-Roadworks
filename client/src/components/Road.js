@@ -29,16 +29,26 @@ const Road = ({ item, setMapCentre, setMapOpen }) => {
   } = item;
 
   const openMap = async (east, north) => {
+    let response;
+
     try {
       const fullURL = `${openProxy}/${BGSSite}${east}&northing=${north}`;
-      const response = await fetch(fullURL);
-      const data = await response.json();
+      console.log({ fullURL });
+      response = await fetch(fullURL);
 
-      const { LONGITUDE: lng, LATITUDE: lat } = data;
-      setMapCentre({ lat, lng });
-      setMapOpen(true);
+      if (response.ok) {
+        console.log({ response });
+        const data = await response.json();
+
+        const { LONGITUDE: lng, LATITUDE: lat } = data;
+        setMapCentre({ lat, lng });
+        setMapOpen(true);
+      } else {
+        console.warn({ response });
+      }
     } catch (e) {
       console.error(e);
+      console.error({ response });
     }
   };
 
