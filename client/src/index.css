@@ -51,7 +51,6 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   color: var(--lighter);
   font-size: 1.5rem;
-  letter-spacing: -1px;
 }
 
 label {
@@ -167,6 +166,14 @@ article span i {
   color: var(--date-highlight);
 }
 
+.map-button {
+  margin-left: 1em;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
 
 /* Media Queries */
 
