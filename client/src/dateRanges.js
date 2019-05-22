@@ -1,7 +1,5 @@
 const weekms = 7 * 86400 * 1000; // A week of milliseconds
-
 const now = new Date().setHours(0, 0, 0); // Midnight today
-
 const weekAgo = now - weekms; // A week ago
 const fortnightsTime = now + weekms * 2; // Two week's time
 

@@ -175,6 +175,12 @@ article span i {
   width: 100%;
 }
 
+.pointer {
+  color: black;
+  font-size: 24px;
+}
+
+
 /* Media Queries */
 
 @media (max-width: 900px) {
