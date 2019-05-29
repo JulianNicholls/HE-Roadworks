@@ -162,7 +162,8 @@ article.a-road h2 {
   font-size: 1.4rem;
 }
 
-article span i {
+article span.duration-extra {
+  font-size: 0.9em;
   color: var(--date-highlight);
 }
 

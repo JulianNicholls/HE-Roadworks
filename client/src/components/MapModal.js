@@ -8,10 +8,13 @@ ReactModal.setAppElement('#root');
 
 ReactModal.defaultStyles = {
   ...ReactModal.defaultStyles,
-  top: '15vh',
-  bottom: '15vh',
-  left: '15vw',
-  right: '15vw',
+  content: {
+    ...ReactModal.defaultStyles.content,
+    top: '15vh',
+    bottom: '15vh',
+    left: '15vw',
+    right: '15vw',
+  },
 };
 
 const Pointer = () => {
@@ -23,7 +26,11 @@ const Pointer = () => {
 };
 
 const MapModal = ({ centre, open, close }) => (
-  <ReactModal isOpen={open} onRequestClose={close} contentLabel="Roadworks Map">
+  <ReactModal
+    isOpen={open}
+    onRequestClose={close}
+    contentLabel="Roadworks Map"
+  >
     <div id="map">
       <RoadworksMap
         bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS_KEY }}

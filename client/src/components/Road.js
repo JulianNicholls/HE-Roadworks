@@ -33,11 +33,11 @@ const Road = ({ item, setMapCentre, setMapOpen }) => {
 
     try {
       const fullURL = `${openProxy}/${BGSSite}${east}&northing=${north}`;
-      console.log({ fullURL });
+      // console.log({ fullURL });
       response = await fetch(fullURL);
 
       if (response.ok) {
-        console.log({ response });
+        // console.log({ response });
         const data = await response.json();
 
         const { LONGITUDE: lng, LATITUDE: lat } = data;
@@ -75,8 +75,10 @@ const Road = ({ item, setMapCentre, setMapOpen }) => {
       <p>{description}</p>
       <span className="duration">
         Duration: {dateUK(startDate)} - {dateUK(endDate)}{' '}
-        {shouldBeDone && <i>(should be complete)</i>}
-        {notStarted && <i>(Starting soon)</i>}
+        {shouldBeDone && (
+          <span className="duration-extra">(should be complete)</span>
+        )}
+        {notStarted && <span className="duration-extra">(Starting soon)</span>}
       </span>
     </article>
   );
