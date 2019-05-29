@@ -14,7 +14,7 @@ const cleanup = description => {
     { regex: /\n\n/g, replacement: '\n' },
     { regex: /[ \t][ \t][ \t]/g, replacement: ' ' },
     { regex: /[ \t][ \t]/g, replacement: ' ' },
-    { regex: /hardshoulder/g, replacement: 'hard shoulder' },
+    { regex: /hardshoulder/ig, replacement: 'hard shoulder' },
     { regex: /\s+&amp;\s+/g, replacement: ' and ' },
     { regex: /\s+&\s+/g, replacement: ' and ' },
     { regex: /\s+southbound\s+/g, replacement: ' Southbound ' },
@@ -30,8 +30,8 @@ const cleanup = description => {
   }, description);
 };
 
-// The wrinkle in the sorting is that there are entries like 'M27 M271' which
-// would need to be sorted between 'M27' and 'M27 M3'. There are actually entries
+// The wrinkle in the sorting is that there are entries like 'M27 M3' which
+// would need to be sorted between 'M27' and 'M27 M271'. There are actually entries
 // that have more than two roads, but they tend to be more or less unique.
 
 // Regex for splitting, thus:
@@ -39,10 +39,10 @@ const cleanup = description => {
 const numRegex = /^[AM](\d{1,4})\s?([AM])?(\d{1,4})?/;
 
 const compare = (a, b) => {
-  // First of all, primary road M-ways before A-roads
+  // First of all, Motorways before A-roads
   if (a.roads[0] !== b.roads[0]) return a.roads[0] < b.roads[0] ? 1 : -1;
 
-  // Both primaries are M-way or A-road.
+  // Both primaries are Motorway or A-road.
   const left = a.roads.match(numRegex);
   const right = b.roads.match(numRegex);
 
@@ -63,6 +63,9 @@ const compare = (a, b) => {
   return Number(left[3]) - Number(right[3]);
 };
 
+// Convert the JSON output from fast-xml-parser which retains the multiple
+// levels contained in the XML to a flat representation of each roadwork item.
+// Then, sort it into the order mentioned above.
 function flattenRoadworks(jsonData) {
   const rawData = jsonData.Report.HE_PLANNED_ROADWORKS.HE_PLANNED_WORKS_Collection.HE_PLANNED_WORKS.reduce(
     (works, cur) => {
@@ -71,11 +74,12 @@ function flattenRoadworks(jsonData) {
 
       let roads = cur.ROADS.Report.ROADS.ROAD_Collection.ROAD;
 
-      // Turn roads into a comma-separayted string if there is more than one road
+      // Turn roads into a string if there is more than one road
       roads =
         roads.ROAD_NUMBER ||
         roads.map(({ ROAD_NUMBER }) => ROAD_NUMBER).join(' ');
 
+      // Clean up the description
       const description = cleanup(cur.DESCRIPTION);
 
       const item = {
@@ -101,8 +105,9 @@ function flattenRoadworks(jsonData) {
   return rawData;
 }
 
-let serving = false;
-let filename = process.argv[2]; // Assume not serving
+// MAIN ENTRY
+let serving = false; // Assume not serving
+let filename = process.argv[2];
 let app;
 
 if (process.argv[2].toLowerCase() === 'serve') {
@@ -114,13 +119,14 @@ if (process.argv[2].toLowerCase() === 'serve') {
 const xmlData = fs.readFileSync(filename, 'utf-8');
 
 const parserOptions = {
-  attributeNamePrefix: '',
-  ignoreAttributes: false,
-  ignoreNameSpace: true,
-  AllowBooleanAttributes: true,
-  parseAttributeValue: true,
+  attributeNamePrefix: '',  // Don't prefix attributes
+  ignoreAttributes: false,  // Collect attributes
+  ignoreNameSpace: true,    // Throw away the namespaces
+  AllowBooleanAttributes: true, // I'm not sure there are any
+  parseAttributeValue: true,  // Parse out attribute values to Number etc
 };
 
+// Validate the incoming XML and exit if not
 const validObj = parser.validate(xmlData);
 
 if (validObj !== true) {
@@ -128,15 +134,17 @@ if (validObj !== true) {
   process.exit(-1);
 }
 
+// Parse the XML and flatten out the resulting JSON
 const roadworks = flattenRoadworks(parser.parse(xmlData, parserOptions));
 
+// Either serve it up at localhost:3050 or just print it.
 if (serving) {
   app.get('/', (req, res, next) => {
     // res.status(200).json(roadworks);
     res.status(200).json(roadworks);
   });
 
-  app.listen(process.env.POST || 3050, () => {
+  app.listen(process.env.PORT || 3050, () => {
     console.log('Raw JSON server running on port 3050');
   });
 } else {
