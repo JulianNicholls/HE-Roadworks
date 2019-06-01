@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { inTheLastWeek, inTheNextFortnight } from '../dateRanges';
 
-export const WorksContext = React.createContext();
+const WorksContext = React.createContext();
 
 export const Provider = ({ children }) => {
   const [roadworks, setRoadworks] = useState([]);
