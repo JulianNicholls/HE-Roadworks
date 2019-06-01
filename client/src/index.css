@@ -163,8 +163,10 @@ article.a-road h2 {
 }
 
 article span.duration-extra {
-  font-size: 0.9em;
   color: var(--date-highlight);
+  display: inline-block;
+  font-size: 0.9em;
+  margin-left: 1rem;
 }
 
 .map-button {
