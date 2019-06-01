@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { useDebounce } from 'react-use';
 
 import WorksContext from '../context';
 
@@ -7,26 +8,31 @@ const SelectionPanel = () => {
     WorksContext
   );
   const [location, setLocation] = useState('');
+  const [lastSelected, setLastSelected] = useState(selected);
+
+  useDebounce(
+    () => {
+      // When entering search text, remove the selected road from the context
+
+      // Only start searching after two characters. I was going to make it three,
+      // but searching for e.g. BT is a valid thing to do.
+      if (location.length > 1) {
+        setSelected('');
+        setSearchText(location);
+      } else if (location.length === 0 && lastSelected) {
+        setSelected(lastSelected);
+      }
+    },
+    300,
+    [location]
+  );
 
   // When selecting a road, remove the search text from here and the context
   const changeRoad = e => {
     setSelected(e.target.value);
+    setLastSelected(e.target.value);
     setLocation('');
     setSearchText('');
-  };
-
-  // When entering search text, remove the selected road from the context
-  const newLocation = e => {
-    const newLoc = e.target.value;
-
-    setLocation(newLoc);
-
-    // Only start searching after two characters. I was going to make it three,
-    // but searching for e.g. BT is a valid thing to do.
-    if (newLoc.length > 1) {
-      setSelected('');
-      setSearchText(newLoc);
-    }
   };
 
   return (
@@ -48,7 +54,7 @@ const SelectionPanel = () => {
           type="search"
           id="location"
           value={location}
-          onChange={newLocation}
+          onChange={e => setLocation(e.target.value)}
         />
       </div>
     </section>
