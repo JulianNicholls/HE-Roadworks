@@ -26,16 +26,12 @@ const Pointer = () => {
 };
 
 const MapModal = ({ centre, open, close }) => (
-  <ReactModal
-    isOpen={open}
-    onRequestClose={close}
-    contentLabel="Roadworks Map"
-  >
+  <ReactModal isOpen={open} onRequestClose={close} contentLabel="Roadworks Map">
     <div id="map">
       <RoadworksMap
         bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS_KEY }}
         defaultCenter={centre}
-        defaultZoom={16}
+        defaultZoom={15}
       >
         <Pointer {...centre} />
       </RoadworksMap>

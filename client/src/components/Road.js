@@ -33,11 +33,9 @@ const Road = ({ item, setMapCentre, setMapOpen }) => {
 
     try {
       const fullURL = `${openProxy}/${BGSSite}${east}&northing=${north}`;
-      // console.log({ fullURL });
       response = await fetch(fullURL);
 
       if (response.ok) {
-        // console.log({ response });
         const data = await response.json();
 
         const { LONGITUDE: lng, LATITUDE: lat } = data;
