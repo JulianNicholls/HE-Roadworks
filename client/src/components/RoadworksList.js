@@ -5,7 +5,7 @@ import WorksContext from '../context';
 
 import Road from './Road';
 
-const RoadworksList = ({ setMapCentre, setMapOpen }) => {
+const RoadworksList = ({ setMapCentre }) => {
   const { selectedRoadworks } = useContext(WorksContext);
 
   const roadworks = selectedRoadworks();
@@ -16,12 +16,7 @@ const RoadworksList = ({ setMapCentre, setMapOpen }) => {
         <h2 className="centred">No matching roadworks</h2>
       )}
       {roadworks.map((item, index) => (
-        <Road
-          item={item}
-          key={index}
-          setMapCentre={setMapCentre}
-          setMapOpen={setMapOpen}
-        />
+        <Road item={item} key={index} setMapCentre={setMapCentre} />
       ))}
     </section>
   );
@@ -29,7 +24,6 @@ const RoadworksList = ({ setMapCentre, setMapOpen }) => {
 
 RoadworksList.propTypes = {
   setMapCentre: PropTypes.func.isRequired,
-  setMapOpen: PropTypes.func.isRequired,
 };
 
 export default RoadworksList;

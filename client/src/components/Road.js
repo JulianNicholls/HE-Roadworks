@@ -3,11 +3,6 @@ import PropTypes from 'prop-types';
 
 import { notStartedYet, finished } from '../dateRanges';
 
-const BGSSite =
-  'https://www.bgs.ac.uk/data/webservices/CoordConvert_LL_BNG.cfc?method=BNGtoLatLng&easting=';
-
-const openProxy = 'https://cors-anywhere.herokuapp.com';
-
 const dateUK = dateStr => {
   return new Date(dateStr).toLocaleDateString('en-gb', {
     day: '2-digit',
@@ -16,7 +11,7 @@ const dateUK = dateStr => {
   });
 };
 
-const Road = ({ item, setMapCentre, setMapOpen }) => {
+const Road = ({ item, setMapCentre }) => {
   const {
     roads,
     description,
@@ -27,28 +22,6 @@ const Road = ({ item, setMapCentre, setMapOpen }) => {
     centreEasting,
     centreNorthing,
   } = item;
-
-  const openMap = async (east, north) => {
-    let response;
-
-    try {
-      const fullURL = `${openProxy}/${BGSSite}${east}&northing=${north}`;
-      response = await fetch(fullURL);
-
-      if (response.ok) {
-        const data = await response.json();
-
-        const { LONGITUDE: lng, LATITUDE: lat } = data;
-        setMapCentre({ lat, lng });
-        setMapOpen(true);
-      } else {
-        console.warn({ response });
-      }
-    } catch (e) {
-      console.error(e);
-      console.error({ response });
-    }
-  };
 
   const roadClass = roads[0] === 'A' ? 'a-road' : 'motorway';
   const shouldBeDone = finished(endDate);
@@ -65,7 +38,9 @@ const Road = ({ item, setMapCentre, setMapOpen }) => {
         Location: {centreEasting} {centreNorthing}
         <button
           className="map-button"
-          onClick={() => openMap(centreEasting, centreNorthing)}
+          onClick={() =>
+            setMapCentre({ east: centreEasting, north: centreNorthing })
+          }
         >
           Map
         </button>
@@ -85,7 +60,6 @@ const Road = ({ item, setMapCentre, setMapOpen }) => {
 Road.propTypes = {
   item: PropTypes.object.isRequired,
   setMapCentre: PropTypes.func.isRequired,
-  setMapOpen: PropTypes.func.isRequired,
 };
 
 export default Road;

@@ -7,8 +7,7 @@ import RoadworksList from './components/RoadworksList';
 import MapModal from './components/MapModal';
 
 function App() {
-  const [mapOpen, setMapOpen] = useState(false);
-  const [mapCentre, setMapCentre] = useState({ lat: 0, lng: 0 });
+  const [mapCentre, setMapCentre] = useState({ east: 0, north: 0 });
 
   return (
     <div className="App">
@@ -19,17 +18,10 @@ function App() {
           <SelectionPanel />
         </div>
 
-        <RoadworksList
-          setMapCentre={setMapCentre}
-          setMapOpen={() => setMapOpen(true)}
-        />
+        <RoadworksList setMapCentre={setMapCentre} />
       </main>
 
-      <MapModal
-        centre={mapCentre}
-        open={mapOpen}
-        close={() => setMapOpen(false)}
-      />
+      <MapModal centre={mapCentre} />
     </div>
   );
 }
