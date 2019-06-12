@@ -23,7 +23,7 @@ const SelectionPanel = () => {
         setSelected(lastSelected);
       }
     },
-    300,
+    600,
     [location]
   );
 
