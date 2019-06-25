@@ -42,12 +42,12 @@ const MapModal = ({ centre }) => {
 
   useEffect(() => {
     const translateCentre = async () => {
-      let response;
+      let response, fullURL;
 
       setLoading(true);
 
       try {
-        const fullURL = `${openProxy}/${BGSSite}${centre.east}&northing=${
+        fullURL = `${openProxy}/${BGSSite}${centre.east}&northing=${
           centre.north
         }`;
         response = await fetch(fullURL);
@@ -63,8 +63,8 @@ const MapModal = ({ centre }) => {
           console.warn({ response });
         }
       } catch (e) {
-        console.error(e);
-        console.error({ response });
+        console.error({ e });
+        console.log({ fullURL, response });
       }
     };
 
@@ -82,6 +82,17 @@ const MapModal = ({ centre }) => {
           isOpen={open}
           onRequestClose={() => setOpen(false)}
           contentLabel="Roadworks Map"
+          style={{
+            overlay: {
+              backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            },
+            content: {
+              top: '15vh',
+              bottom: '15vh',
+              left: '15vw',
+              right: '15vw',
+            },
+          }}
         >
           <div id="map">
             <RoadworksMap
