@@ -116,6 +116,11 @@ if (process.argv[2].toLowerCase() === 'serve') {
   app = require('express')();
 }
 
+if (!filename) {
+  console.error('No filename specified.');
+  exit(-1);
+}
+
 const xmlData = fs.readFileSync(filename, 'utf-8');
 
 const parserOptions = {
@@ -130,7 +135,7 @@ const parserOptions = {
 const validObj = parser.validate(xmlData);
 
 if (validObj !== true) {
-  console.error({ validObj });
+  console.error('XML Error:\n', { validObj });
   process.exit(-1);
 }
 
