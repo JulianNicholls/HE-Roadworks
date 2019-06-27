@@ -1,6 +1,6 @@
 {
-  "name": "client",
-  "version": "0.1.0",
+  "name": "he-roadworks",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "google-map-react": "^1.1.4",
@@ -14,6 +14,7 @@
     "react-use": "^9.1.2",
     "rebound": "^0.1.0"
   },
+  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
