@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import LoadingPanel from './LoadingPanel';
 import ReactModal from 'react-modal';
 import RoadworksMap from 'google-map-react';
 
-const BGSSite =
-  'https://www.bgs.ac.uk/data/webservices/CoordConvert_LL_BNG.cfc?method=BNGtoLatLng&easting=';
-
+const nearbySite = `http://nearby.org.uk/api/convert.php?key=${process.env.REACT_APP_NEARBY_KEY}&output=text&p=`;
 const openProxy = 'https://cors-anywhere.herokuapp.com';
 
 ReactModal.setAppElement('#root');
@@ -20,10 +19,10 @@ ReactModal.defaultStyles = {
   },
   content: {
     ...ReactModal.defaultStyles.content,
-    top: '15vh',
-    bottom: '15vh',
-    left: '15vw',
-    right: '15vw',
+    top: '10vh',
+    bottom: '10vh',
+    left: '10vw',
+    right: '10vw',
   },
 };
 
@@ -47,24 +46,33 @@ const MapModal = ({ centre }) => {
       setLoading(true);
 
       try {
-        fullURL = `${openProxy}/${BGSSite}${centre.east}&northing=${
-          centre.north
-        }`;
-        response = await fetch(fullURL);
+        fullURL = `${openProxy}/${nearbySite}${centre.east},${centre.north}`;
+        response = await axios.get(fullURL);
 
-        if (response.ok) {
-          const data = await response.json();
+        if (response.status === 200) {
+          const { lat, lng } = response.data.split('\n').reduce(
+            (coords, line) => {
+              if (line.startsWith('ll')) {
+                const parts = line.split(',');
+                return { lat: parseFloat(parts[2]), lng: parseFloat(parts[3]) };
+              }
 
-          const { LONGITUDE: lng, LATITUDE: lat } = data;
+              return coords;
+            },
+            { lat: 0, lng: 0 }
+          );
+
           setMapCentre({ lat, lng });
           setLoading(false);
           setOpen(true);
         } else {
-          console.warn({ response });
+          console.warn({ fullURL, response });
         }
-      } catch (e) {
-        console.error({ e });
-        console.log({ fullURL, response });
+      } catch (error) {
+        console.error({ error });
+        console.warn({ fullURL, response });
+
+        setOpen(false);
       }
     };
 
