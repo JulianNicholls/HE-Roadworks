@@ -14,7 +14,7 @@ const cleanup = description => {
     { regex: /\n\n/g, replacement: '\n' },
     { regex: /[ \t][ \t][ \t]/g, replacement: ' ' },
     { regex: /[ \t][ \t]/g, replacement: ' ' },
-    { regex: /hardshoulder/ig, replacement: 'hard shoulder' },
+    { regex: /hardshoulder/gi, replacement: 'hard shoulder' },
     { regex: /\s+&amp;\s+/g, replacement: ' and ' },
     { regex: /\s+&\s+/g, replacement: ' and ' },
     { regex: /\s+southbound\s+/g, replacement: ' Southbound ' },
@@ -76,8 +76,7 @@ function flattenRoadworks(jsonData) {
 
       // Turn roads into a string if there is more than one road
       roads =
-        roads.ROAD_NUMBER ||
-        roads.map(({ ROAD_NUMBER }) => ROAD_NUMBER).join(' ');
+        roads.ROAD_NUMBER || roads.map(({ ROAD_NUMBER }) => ROAD_NUMBER).join(' ');
 
       // Clean up the description
       const description = cleanup(cur.DESCRIPTION);
@@ -93,16 +92,12 @@ function flattenRoadworks(jsonData) {
         roads,
       };
 
-      works.push(item);
-
-      return works;
+      return [...works, item];
     },
     []
   );
 
-  rawData.sort(compare); // Sort the roads
-
-  return rawData;
+  return rawData.sort(compare); // Sort the roads
 }
 
 // MAIN ENTRY
@@ -124,11 +119,11 @@ if (!filename) {
 const xmlData = fs.readFileSync(filename, 'utf-8');
 
 const parserOptions = {
-  attributeNamePrefix: '',  // Don't prefix attributes
-  ignoreAttributes: false,  // Collect attributes
-  ignoreNameSpace: true,    // Throw away the namespaces
+  attributeNamePrefix: '', // Don't prefix attributes
+  ignoreAttributes: false, // Collect attributes
+  ignoreNameSpace: true, // Throw away the namespaces
   AllowBooleanAttributes: true, // I'm not sure there are any
-  parseAttributeValue: true,  // Parse out attribute values to Number etc
+  parseAttributeValue: true, // Parse out attribute values to Number etc
 };
 
 // Validate the incoming XML and exit if not
@@ -145,7 +140,6 @@ const roadworks = flattenRoadworks(parser.parse(xmlData, parserOptions));
 // Either serve it up at localhost:3050 or just print it.
 if (serving) {
   app.get('/', (req, res, next) => {
-    // res.status(200).json(roadworks);
     res.status(200).json(roadworks);
   });
 
