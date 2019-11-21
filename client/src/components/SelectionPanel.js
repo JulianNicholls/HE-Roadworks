@@ -1,12 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useDebounce } from 'react-use';
 
-import WorksContext from '../context';
+import { useRoadworks } from '../context';
 
 const SelectionPanel = () => {
-  const { roads, selected, setSelected, setSearchText } = useContext(
-    WorksContext
-  );
+  const { roads, selected, setSelected, setSearchText } = useRoadworks();
   const [location, setLocation] = useState('');
   const [lastSelected, setLastSelected] = useState(selected);
 

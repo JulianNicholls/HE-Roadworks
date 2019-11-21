@@ -1,14 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import WorksContext from '../context';
-
 import Road from './Road';
+import { useRoadworks } from '../context';
 
 const RoadworksList = ({ setMapCentre }) => {
-  const { selectedRoadworks } = useContext(WorksContext);
-
-  const roadworks = selectedRoadworks();
+  const roadworks = useRoadworks().selectedRoadworks();
 
   return (
     <section>

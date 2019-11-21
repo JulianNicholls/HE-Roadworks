@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import { inTheLastWeek, inTheNextFortnight } from '../dateRanges';
 
@@ -16,7 +16,7 @@ export const Provider = ({ children }) => {
       const roadworksData = await response.json();
 
       // Filter the roadworks so that
-      //   (a) They start before 7 days time.
+      //   (a) They start before 14 days time.
       //   (b) They haven't been over for more than a week.
       const filteredRoadworks = roadworksData.filter(({ startDate, endDate }) => {
         return inTheNextFortnight(startDate) && inTheLastWeek(endDate);
@@ -86,4 +86,11 @@ export const Provider = ({ children }) => {
   return <WorksContext.Provider value={state}>{children}</WorksContext.Provider>;
 };
 
-export default WorksContext;
+export const useRoadworks = () => {
+  const context = useContext(WorksContext);
+
+  if (context === undefined)
+    throw new Error('useColours() must be used within a ColourProvider block');
+
+  return context;
+};
