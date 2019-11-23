@@ -67,12 +67,12 @@ const MapModal = ({ centre }) => {
           setOpen(true);
         } else {
           console.warn({ fullURL, response });
+          setLoading(false);
         }
       } catch (error) {
         console.error({ error });
         console.warn({ fullURL, response });
-
-        setOpen(false);
+        setLoading(false);
       }
     };
 
@@ -90,17 +90,6 @@ const MapModal = ({ centre }) => {
           isOpen={open}
           onRequestClose={() => setOpen(false)}
           contentLabel="Roadworks Map"
-          style={{
-            overlay: {
-              backgroundColor: 'rgba(0, 0, 0, 0.4)',
-            },
-            content: {
-              top: '15vh',
-              bottom: '15vh',
-              left: '15vw',
-              right: '15vw',
-            },
-          }}
         >
           <div id="map">
             <RoadworksMap
