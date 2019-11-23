@@ -4,7 +4,7 @@ import { inTheLastWeek, inTheNextFortnight } from '../dateRanges';
 
 const WorksContext = React.createContext();
 
-export const Provider = ({ children }) => {
+export const RoadworksProvider = ({ children }) => {
   const [roadworks, setRoadworks] = useState([]);
   const [roads, setRoads] = useState([]);
   const [selected, setSelected] = useState('');
@@ -90,7 +90,9 @@ export const useRoadworks = () => {
   const context = useContext(WorksContext);
 
   if (context === undefined)
-    throw new Error('useColours() must be used within a ColourProvider block');
+    throw new Error(
+      'useRoadworks() must be used within a RoadworksProvider block'
+    );
 
   return context;
 };

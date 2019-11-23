@@ -13,7 +13,7 @@ let lat, lng;
 lines.forEach(line => {
   if (line.startsWith('ll')) {
     const parts = line.split(',');
-    console.log({ parts });
+
     lat = parseFloat(parts[2]);
     lng = parseFloat(parts[3]);
   }
