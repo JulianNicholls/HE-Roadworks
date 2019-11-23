@@ -33,7 +33,7 @@ const Introduction = () => {
         .
       </p>
       <p>
-        You can find information by road number, or search descriptions. The
+        You can find information by road number, or search the descriptions. The
         listed roadworks have already started or will start within the next two
         weeks. Roadworks which should have been completed at least a week ago are
         not shown (hopeful, I know).

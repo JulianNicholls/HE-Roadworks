@@ -45,6 +45,10 @@ export const RoadworksProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    initialLoad();
+  }, []);
+
   const selectedRoadworks = () => {
     let retval = [];
 
@@ -68,10 +72,6 @@ export const RoadworksProvider = ({ children }) => {
 
     return retval;
   };
-
-  useEffect(() => {
-    initialLoad();
-  }, []);
 
   const state = {
     roadworks,

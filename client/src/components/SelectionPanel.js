@@ -8,6 +8,8 @@ const SelectionPanel = () => {
   const [location, setLocation] = useState('');
   const [lastSelected, setLastSelected] = useState(selected);
 
+  // Don't start the search while the user is typing, wait until they've
+  // stopped for 600ms.
   useDebounce(
     () => {
       // When entering search text, remove the selected road from the context
@@ -47,7 +49,7 @@ const SelectionPanel = () => {
         </select>
       </div>
       <div>
-        <label htmlFor="location">Search</label>
+        <label htmlFor="location">Search Descriptions</label>
         <input
           type="search"
           id="location"
