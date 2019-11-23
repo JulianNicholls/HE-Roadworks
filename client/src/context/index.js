@@ -9,6 +9,7 @@ export const RoadworksProvider = ({ children }) => {
   const [roads, setRoads] = useState([]);
   const [selected, setSelected] = useState('');
   const [searchText, setSearchText] = useState('');
+  const [centreEN, setCentreEN] = useState({ east: 0, north: 0 });
 
   const initialLoad = async () => {
     try {
@@ -78,9 +79,11 @@ export const RoadworksProvider = ({ children }) => {
     roads,
     selected,
     searchText,
+    centreEN,
     selectedRoadworks,
     setSelected,
     setSearchText,
+    setCentreEN,
   };
 
   return <WorksContext.Provider value={state}>{children}</WorksContext.Provider>;

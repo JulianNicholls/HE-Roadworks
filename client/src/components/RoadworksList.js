@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Road from './Road';
 import { useRoadworks } from '../context';
 
-const RoadworksList = ({ setMapCentre }) => {
+const RoadworksList = () => {
   const roadworks = useRoadworks().selectedRoadworks();
 
   return (
@@ -13,14 +12,10 @@ const RoadworksList = ({ setMapCentre }) => {
         <h2 className="centred">No matching roadworks</h2>
       )}
       {roadworks.map((item, index) => (
-        <Road item={item} key={index} setMapCentre={setMapCentre} />
+        <Road item={item} key={index} />
       ))}
     </section>
   );
-};
-
-RoadworksList.propTypes = {
-  setMapCentre: PropTypes.func.isRequired,
 };
 
 export default RoadworksList;

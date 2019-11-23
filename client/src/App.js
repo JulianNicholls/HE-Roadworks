@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Header from './components/Header';
 import Introduction from './components/Introduction';
 import SelectionPanel from './components/SelectionPanel';
 import RoadworksList from './components/RoadworksList';
 import MapModal from './components/MapModal';
+import { useRoadworks } from './context';
 
 function App() {
-  const [mapCentre, setMapCentre] = useState({ east: 0, north: 0 });
+  const { centreEN } = useRoadworks();
 
   return (
     <div className="App">
@@ -18,10 +19,10 @@ function App() {
           <SelectionPanel />
         </div>
 
-        <RoadworksList setMapCentre={setMapCentre} />
+        <RoadworksList />
       </main>
 
-      <MapModal centre={mapCentre} />
+      <MapModal centre={centreEN} />
     </div>
   );
 }

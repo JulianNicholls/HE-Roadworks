@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { notStartedYet, finished } from '../dateRanges';
+import { useRoadworks } from '../context';
 
 const dateUK = dateStr => {
   return new Date(dateStr).toLocaleDateString('en-gb', {
@@ -12,6 +13,8 @@ const dateUK = dateStr => {
 };
 
 const Road = ({ item, setMapCentre }) => {
+  const { setCentreEN } = useRoadworks();
+
   const {
     roads,
     description,
@@ -39,7 +42,7 @@ const Road = ({ item, setMapCentre }) => {
         <button
           className="map-button"
           onClick={() =>
-            setMapCentre({ east: centreEasting, north: centreNorthing })
+            setCentreEN({ east: centreEasting, north: centreNorthing })
           }
         >
           Map
@@ -59,7 +62,6 @@ const Road = ({ item, setMapCentre }) => {
 
 Road.propTypes = {
   item: PropTypes.object.isRequired,
-  setMapCentre: PropTypes.func.isRequired,
 };
 
 export default Road;
