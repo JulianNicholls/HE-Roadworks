@@ -1,4 +1,3 @@
-const fs = require('fs');
 const parser = require('fast-xml-parser');
 
 const cleanup = description => {
@@ -63,10 +62,21 @@ const compare = (a, b) => {
   return Number(left[3]) - Number(right[3]);
 };
 
-// Convert the JSON output from fast-xml-parser which retains the multiple
+// Parse the XML and convert the JSON output which retains the multiple
 // levels contained in the XML to a flat representation of each roadwork item.
 // Then, sort it into the order mentioned above.
-function flattenRoadworks(jsonData) {
+
+const parserOptions = {
+  attributeNamePrefix: '', // Don't prefix attributes
+  ignoreAttributes: false, // Collect attributes
+  ignoreNameSpace: true, // Throw away the namespaces
+  AllowBooleanAttributes: true, // I'm not sure there are any
+  parseAttributeValue: true, // Parse out attribute values to Number etc
+};
+
+const parseRoadworks = xmlData => {
+  const jsonData = parser.parse(xmlData, parserOptions);
+
   const rawData = jsonData.Report.HE_PLANNED_ROADWORKS.HE_PLANNED_WORKS_Collection.HE_PLANNED_WORKS.reduce(
     (works, cur) => {
       const eastNorth =
@@ -98,54 +108,10 @@ function flattenRoadworks(jsonData) {
   );
 
   return rawData.sort(compare); // Sort the roads
-}
-
-// MAIN ENTRY
-let serving = false; // Assume not serving
-let filename = process.argv[2];
-let app;
-
-if (process.argv[2].toLowerCase() === 'serve') {
-  serving = true;
-  filename = process.argv[3];
-  app = require('express')();
-}
-
-if (!filename) {
-  console.error('No filename specified.');
-  exit(-1);
-}
-
-const xmlData = fs.readFileSync(filename, 'utf-8');
-
-const parserOptions = {
-  attributeNamePrefix: '', // Don't prefix attributes
-  ignoreAttributes: false, // Collect attributes
-  ignoreNameSpace: true, // Throw away the namespaces
-  AllowBooleanAttributes: true, // I'm not sure there are any
-  parseAttributeValue: true, // Parse out attribute values to Number etc
 };
 
-// Validate the incoming XML and exit if not
-const validObj = parser.validate(xmlData);
+const validate = xmlData => {
+  return parser.validate(xmlData);
+};
 
-if (validObj !== true) {
-  console.error('XML Error:\n', { validObj });
-  process.exit(-1);
-}
-
-// Parse the XML and flatten out the resulting JSON
-const roadworks = flattenRoadworks(parser.parse(xmlData, parserOptions));
-
-// Either serve it up at localhost:3050 or just print it.
-if (serving) {
-  app.get('/', (req, res, next) => {
-    res.status(200).json(roadworks);
-  });
-
-  app.listen(process.env.PORT || 3050, () => {
-    console.log('Raw JSON server running on port 3050');
-  });
-} else {
-  console.log(JSON.stringify(roadworks, null, 2));
-}
+module.exports = { validate, parseRoadworks };
