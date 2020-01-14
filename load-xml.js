@@ -79,30 +79,39 @@ const parseRoadworks = xmlData => {
 
   const rawData = jsonData.Report.HE_PLANNED_ROADWORKS.HE_PLANNED_WORKS_Collection.HE_PLANNED_WORKS.reduce(
     (works, cur) => {
-      const eastNorth =
-        cur.EASTNORTH.Report.EASTINGNORTHING.EASTNORTH_Collection.EASTNORTH;
+      if (
+        cur.EASTNORTH &&
+        cur.EASTNORTH.Report &&
+        cur.EASTNORTH.Report.EASTINGNORTHING // Sometimes (once?) an empty string
+      ) {
+        const eastNorth =
+          cur.EASTNORTH.Report.EASTINGNORTHING.EASTNORTH_Collection.EASTNORTH;
 
-      let roads = cur.ROADS.Report.ROADS.ROAD_Collection.ROAD;
+        let roads = cur.ROADS.Report.ROADS.ROAD_Collection.ROAD;
 
-      // Turn roads into a string if there is more than one road
-      roads =
-        roads.ROAD_NUMBER || roads.map(({ ROAD_NUMBER }) => ROAD_NUMBER).join(' ');
+        // Turn roads into a string if there is more than one road
+        roads =
+          roads.ROAD_NUMBER ||
+          roads.map(({ ROAD_NUMBER }) => ROAD_NUMBER).join(' ');
 
-      // Clean up the description
-      const description = cleanup(cur.DESCRIPTION);
+        // Clean up the description
+        const description = cleanup(cur.DESCRIPTION);
 
-      const item = {
-        startDate: new Date(cur.SDATE),
-        endDate: new Date(cur.EDATE),
-        expectedDelay: cur.EXPDEL,
-        description,
-        closureType: cur.CLOSURE_TYPE,
-        centreEasting: eastNorth.CENTRE_EASTING,
-        centreNorthing: eastNorth.CENTRE_NORTHING,
-        roads,
-      };
+        const item = {
+          startDate: new Date(cur.SDATE),
+          endDate: new Date(cur.EDATE),
+          expectedDelay: cur.EXPDEL,
+          description,
+          closureType: cur.CLOSURE_TYPE,
+          centreEasting: eastNorth.CENTRE_EASTING,
+          centreNorthing: eastNorth.CENTRE_NORTHING,
+          roads,
+        };
 
-      return [...works, item];
+        return [...works, item];
+      }
+
+      return works;
     },
     []
   );
