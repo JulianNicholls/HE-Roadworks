@@ -62,3 +62,5 @@ typings/
 *.xml
 .env*
 build
+
+*.json
