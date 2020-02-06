@@ -2,4 +2,4 @@
 
 cd /home/julian/sources/react/roadworks
 DATE=`date +%Y-%m-%d`
-node read-page.js >"roadworks-$DATE.json"
+/home/julian/.nvm/versions/node/v13.3.0/bin/node read-page.js >"roadworks-$DATE.json"

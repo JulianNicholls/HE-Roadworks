@@ -54,7 +54,6 @@ const compare = (a, b) => {
 
     return -1; // Left no second, right has, left is less
   } else if (right[2] === undefined) return 1; // Left has second, right not, left is more
-
   // Back to A-road vs M-way on secondary
   if (left[2] !== right[2]) return left[2] < right[2] ? 1 : -1;
 
