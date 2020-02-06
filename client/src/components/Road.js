@@ -12,7 +12,7 @@ const dateUK = dateStr => {
   });
 };
 
-const Road = ({ item, setMapCentre }) => {
+const Road = ({ item }) => {
   const { setCentreEN } = useRoadworks();
 
   const {
@@ -52,7 +52,7 @@ const Road = ({ item, setMapCentre }) => {
       <span className="duration">
         Duration: {dateUK(startDate)} - {dateUK(endDate)}{' '}
         {shouldBeDone && (
-          <span className="duration-extra">(should be complete)</span>
+          <span className="duration-extra">(should be completed)</span>
         )}
         {notStarted && <span className="duration-extra">(Starting soon)</span>}
       </span>

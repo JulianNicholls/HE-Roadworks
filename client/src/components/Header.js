@@ -8,7 +8,7 @@ const Header = () => {
         <a href="https://reallybigshoe.co.uk">Home</a>
         <a href="https://reallybigshoe.co.uk/visualiser">Palette Visualiser</a>
         <a href="http://spacex.reallybigshoe.co.uk">SpaceX Info</a>
-        <a href="http://countdown.reallybigshoe.co.uk">Countdown Magician</a>
+        <a href="https://reallybigshoe.co.uk/countdown">Countdown Magician</a>
         <a
           href="https://github.com/JulianNicholls"
           target="_blank"
