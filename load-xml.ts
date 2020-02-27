@@ -1,4 +1,4 @@
-const parser = require('fast-xml-parser');
+import parser, { ValidationError } from 'fast-xml-parser';
 
 type XMLString = string;
 type JSONString = string;
@@ -100,7 +100,7 @@ type XMLRoadList = Array<XMLSingleRoad>;
 
 type XMLRoad = XMLSingleRoad | XMLRoadList;
 
-const parseRoadworks = (xmlData: XMLString) => {
+export const parseRoadworks = (xmlData: XMLString) => {
   const jsonData = parser.parse(xmlData, parserOptions);
 
   const rawData = jsonData.Report.HE_PLANNED_ROADWORKS.HE_PLANNED_WORKS_Collection.HE_PLANNED_WORKS.reduce(
@@ -148,8 +148,6 @@ const parseRoadworks = (xmlData: XMLString) => {
   return rawData.sort(compare); // Sort the roads
 };
 
-const validate = (xmlData: XMLString): boolean => {
+export const validate = (xmlData: XMLString): true | ValidationError => {
   return parser.validate(xmlData);
 };
-
-module.exports = { validate, parseRoadworks };
