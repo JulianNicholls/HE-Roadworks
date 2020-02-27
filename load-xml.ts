@@ -1,7 +1,26 @@
 const parser = require('fast-xml-parser');
 
-const cleanup = description => {
-  const replacements = [
+type XMLString = string;
+type JSONString = string;
+
+interface Replacement {
+  regex: RegExp;
+  replacement: string;
+}
+
+interface Road {
+  startDate: Date;
+  endDate: Date;
+  expectedDelay: string;
+  description: string;
+  closureType: string;
+  centreEasting: string;
+  centreNorthing: string;
+  roads: string;
+}
+
+const cleanup = (description: string) => {
+  const replacements: Array<Replacement> = [
     { regex: /jct jct/gi, replacement: 'Junction' },
     { regex: /jct/gi, replacement: 'Junction' },
     { regex: /jn/gi, replacement: 'Junction' },
@@ -35,9 +54,9 @@ const cleanup = description => {
 
 // Regex for splitting, thus:
 //  'M27 M3' -> [matchdata, '27', 'M', '3']
-const numRegex = /^[AM](\d{1,4})\s?([AM])?(\d{1,4})?/;
+const numRegex: RegExp = /^[AM](\d{1,4})\s?([AM])?(\d{1,4})?/;
 
-const compare = (a, b) => {
+const compare = (a: Road, b: Road): number => {
   // First of all, Motorways before A-roads
   if (a.roads[0] !== b.roads[0]) return a.roads[0] < b.roads[0] ? 1 : -1;
 
@@ -73,11 +92,19 @@ const parserOptions = {
   parseAttributeValue: true, // Parse out attribute values to Number etc
 };
 
-const parseRoadworks = xmlData => {
+interface XMLSingleRoad {
+  ROAD_NUMBER: string;
+}
+
+type XMLRoadList = Array<XMLSingleRoad>;
+
+type XMLRoad = XMLSingleRoad | XMLRoadList;
+
+const parseRoadworks = (xmlData: XMLString) => {
   const jsonData = parser.parse(xmlData, parserOptions);
 
   const rawData = jsonData.Report.HE_PLANNED_ROADWORKS.HE_PLANNED_WORKS_Collection.HE_PLANNED_WORKS.reduce(
-    (works, cur) => {
+    (works: Array<Road>, cur: any) => {
       if (
         cur.EASTNORTH &&
         cur.EASTNORTH.Report &&
@@ -86,17 +113,20 @@ const parseRoadworks = xmlData => {
         const eastNorth =
           cur.EASTNORTH.Report.EASTINGNORTHING.EASTNORTH_Collection.EASTNORTH;
 
-        let roads = cur.ROADS.Report.ROADS.ROAD_Collection.ROAD;
+        let road_data: XMLRoad = cur.ROADS.Report.ROADS.ROAD_Collection.ROAD;
 
         // Turn roads into a string if there is more than one road
-        roads =
-          roads.ROAD_NUMBER ||
-          roads.map(({ ROAD_NUMBER }) => ROAD_NUMBER).join(' ');
+
+        const roads: string =
+          (road_data as XMLSingleRoad).ROAD_NUMBER ||
+          (road_data as XMLRoadList)
+            .map(({ ROAD_NUMBER }: XMLSingleRoad) => ROAD_NUMBER)
+            .join(' ');
 
         // Clean up the description
         const description = cleanup(cur.DESCRIPTION);
 
-        const item = {
+        const item: Road = {
           startDate: new Date(cur.SDATE),
           endDate: new Date(cur.EDATE),
           expectedDelay: cur.EXPDEL,
@@ -118,7 +148,7 @@ const parseRoadworks = xmlData => {
   return rawData.sort(compare); // Sort the roads
 };
 
-const validate = xmlData => {
+const validate = (xmlData: XMLString): boolean => {
   return parser.validate(xmlData);
 };
 
