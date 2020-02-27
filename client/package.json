@@ -4,15 +4,15 @@
   "private": true,
   "dependencies": {
     "axios": "^0.19.2",
-    "google-map-react": "^1.1.5",
+    "google-map-react": "^1.1.6",
     "keyboardjs": "^2.5.1",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-modal": "^3.11.1",
-    "react-scripts": "^3.3.0",
-    "react-use": "^13.22.0",
+    "react-scripts": "^3.4.0",
+    "react-use": "^13.26.2",
     "rebound": "^0.1.0"
   },
   "devDependencies": {},

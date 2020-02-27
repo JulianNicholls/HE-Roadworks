@@ -25,5 +25,10 @@
     "fast-xml-parser": "^3.16.0",
     "node-html-parser": "^1.2.7",
     "serve": "^11.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/node": "^13.7.6",
+    "typescript": "^3.8.2"
   }
 }
