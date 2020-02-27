@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "strictNullChecks": false,  // I don't really like turning this off...
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+  },
+  "lib": [
+    "es2015",
+    "dom"
+  ]
+}

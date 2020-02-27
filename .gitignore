@@ -63,4 +63,5 @@ typings/
 .env*
 build
 
-*.json
+road*.json
+exe*.json
