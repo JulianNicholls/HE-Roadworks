@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
-const panelStyle = {
+const panelStyle: CSSProperties = {
   alignItems: 'center',
   background: 'rgba(0, 0, 0, 0.7)',
   color: 'white',
@@ -14,7 +14,7 @@ const panelStyle = {
   width: '30vw',
 };
 
-const LoadingPanel = () => {
+const LoadingPanel = (): JSX.Element => {
   return (
     <div className="loading-panel" style={panelStyle}>
       <h2>Loading Map...</h2>

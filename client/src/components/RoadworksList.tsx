@@ -3,7 +3,7 @@ import React from 'react';
 import Road from './Road';
 import { useRoadworks } from '../context';
 
-const RoadworksList = () => {
+const RoadworksList = (): JSX.Element => {
   const roadworks = useRoadworks().selectedRoadworks();
 
   return (
@@ -11,7 +11,7 @@ const RoadworksList = () => {
       {roadworks.length === 0 && (
         <h2 className="centred">No matching roadworks</h2>
       )}
-      {roadworks.map((item, index) => (
+      {roadworks.map((item: Road, index: number) => (
         <Road item={item} key={index} />
       ))}
     </section>

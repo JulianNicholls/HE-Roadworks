@@ -7,7 +7,7 @@ import RoadworksList from './components/RoadworksList';
 import MapModal from './components/MapModal';
 import { useRoadworks } from './context';
 
-function App() {
+function App(): JSX.Element {
   const { centreEN } = useRoadworks();
 
   return (

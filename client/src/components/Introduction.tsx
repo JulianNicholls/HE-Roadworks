@@ -1,14 +1,14 @@
 import React from 'react';
 
 // Page links
-const dftPage =
+const dftPage: string =
   'https://www.gov.uk/government/organisations/department-for-transport';
-const oglPage =
+const oglPage: string =
   'https://www.nationalarchives.gov.uk/doc/open%2Dgovernment%2Dlicence/';
-const dataPage =
+const dataPage: string =
   'https://data.gov.uk/dataset/5b3267d8-4307-4eef-a9af-3a4c28224694/planned-road-works-on-the-he-road-network';
 
-const Introduction = () => {
+const Introduction = (): JSX.Element => {
   return (
     <section className="introduction">
       <p>

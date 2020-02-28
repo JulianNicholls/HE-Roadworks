@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = () => {
+const Header = (): JSX.Element => {
   return (
     <header className="header">
       <h1>Roadworks</h1>
