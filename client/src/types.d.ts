@@ -1,8 +1,8 @@
 interface WorksItem {
   roads: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   expectedDelay: string;
   closureType: string;
   centreEasting: number;

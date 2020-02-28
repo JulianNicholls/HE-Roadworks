@@ -16,7 +16,7 @@ const SelectionPanel = () => {
   // Don't start the search while the user is typing, wait until they've
   // stopped for 600ms.
   useDebounce(
-    () => {
+    (): void => {
       // When entering search text, remove the selected road from the context
 
       // Only start searching after two characters. I was going to make it three,

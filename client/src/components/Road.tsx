@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { notStartedYet, finished } from '../dateRanges';
 import { useRoadworks } from '../context';
 
-const dateUK = dateStr => {
+const dateUK = (dateStr: string) => {
   return new Date(dateStr).toLocaleDateString('en-gb', {
     day: '2-digit',
     month: 'short',
@@ -12,7 +12,11 @@ const dateUK = dateStr => {
   });
 };
 
-const Road = ({ item }) => {
+interface RoadProps {
+  item: WorksItem;
+}
+
+const Road = ({ item }: RoadProps) => {
   const { setCentreEN } = useRoadworks();
 
   const {
@@ -24,7 +28,7 @@ const Road = ({ item }) => {
     closureType,
     centreEasting,
     centreNorthing,
-  } = item;
+  }: WorksItem = item;
 
   const roadClass = roads[0] === 'A' ? 'a-road' : 'motorway';
   const shouldBeDone = finished(endDate);
