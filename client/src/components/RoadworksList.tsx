@@ -11,7 +11,7 @@ const RoadworksList = (): JSX.Element => {
       {roadworks.length === 0 && (
         <h2 className="centred">No matching roadworks</h2>
       )}
-      {roadworks.map((item: Road, index: number) => (
+      {roadworks.map((item: WorksItem, index: number) => (
         <Road item={item} key={index} />
       ))}
     </section>

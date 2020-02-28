@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useDebounce } from 'react-use';
 
 import { useRoadworks } from '../context';
 
 const SelectionPanel = () => {
-  const { roads, selected, setSelected, setSearchText } = useRoadworks();
-  const [location, setLocation] = useState('');
-  const [lastSelected, setLastSelected] = useState(selected);
+  const {
+    roads,
+    selected,
+    setSelected,
+    setSearchText,
+  }: WorksState = useRoadworks();
+  const [location, setLocation] = useState<string>('');
+  const [lastSelected, setLastSelected] = useState<string>(selected);
 
   // Don't start the search while the user is typing, wait until they've
   // stopped for 600ms.
@@ -28,7 +33,7 @@ const SelectionPanel = () => {
   );
 
   // When selecting a road, remove the search text from here and the context
-  const changeRoad = e => {
+  const changeRoad = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelected(e.target.value);
     setLastSelected(e.target.value);
     setLocation('');
@@ -41,7 +46,7 @@ const SelectionPanel = () => {
         <label htmlFor="road">Road</label>
         <select id="road" onChange={changeRoad} value={selected}>
           <option value="">&nbsp;</option>
-          {roads.map(({ roads }, index) => (
+          {roads.map(({ roads }: RoadIndex, index: number) => (
             <option key={index} value={roads}>
               {roads}
             </option>
