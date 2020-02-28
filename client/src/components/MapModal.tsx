@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import LoadingPanel from './LoadingPanel';
@@ -26,7 +25,7 @@ ReactModal.defaultStyles = {
   },
 };
 
-const Pointer = () => {
+const Pointer = (props: LatLong): JSX.Element => {
   return (
     <span className="pointer" role="img" aria-label="roadworks-location">
       👆
@@ -34,10 +33,19 @@ const Pointer = () => {
   );
 };
 
-const MapModal = ({ centre }) => {
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [mapCentre, setMapCentre] = useState({ lat: 0, lng: 0 });
+interface LatLong {
+  lat: number;
+  lng: number;
+}
+
+interface MapModalProps {
+  centre: ENLocation;
+}
+
+const MapModal = ({ centre }: MapModalProps) => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [mapCentre, setMapCentre] = useState<LatLong>({ lat: 0, lng: 0 });
 
   useEffect(() => {
     const translateCentre = async () => {
@@ -51,9 +59,9 @@ const MapModal = ({ centre }) => {
 
         if (response.status === 200) {
           const { lat, lng } = response.data.split('\n').reduce(
-            (coords, line) => {
+            (coords: LatLong, line: string) => {
               if (line.startsWith('ll')) {
-                const parts = line.split(',');
+                const parts: Array<string> = line.split(',');
                 return { lat: parseFloat(parts[2]), lng: parseFloat(parts[3]) };
               }
 
@@ -93,7 +101,7 @@ const MapModal = ({ centre }) => {
         >
           <div id="map">
             <RoadworksMap
-              bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS_KEY }}
+              bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS_KEY! }}
               defaultCenter={mapCentre}
               defaultZoom={15}
             >
@@ -104,13 +112,6 @@ const MapModal = ({ centre }) => {
       )}
     </>
   );
-};
-
-MapModal.propTypes = {
-  centre: PropTypes.shape({
-    east: PropTypes.number.isRequired,
-    north: PropTypes.number.isRequired,
-  }).isRequired,
 };
 
 export default MapModal;

@@ -16,7 +16,7 @@ interface RoadProps {
   item: WorksItem;
 }
 
-const Road = ({ item }: RoadProps) => {
+const Road = ({ item }: RoadProps): JSX.Element => {
   const { setCentreEN } = useRoadworks();
 
   const {
