@@ -34,6 +34,11 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
+"@types/fast-html-parser@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/fast-html-parser/-/fast-html-parser-1.0.0.tgz#64f2842f3d8313d2c539a3f0e4270df42425f713"
+  integrity sha512-/cfbP5tBuAYVlJfdQDZv7NJeO1QhymLoRJOX7XPW8zb0cEzzI9HqdJYR1wvjeKsg0Ajd18I4jQj+YZ/rkEzWQQ==
+
 "@types/mime@*":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.1.tgz#dc488842312a7f075149312905b5e3c0b054c79d"
