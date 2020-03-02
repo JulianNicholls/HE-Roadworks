@@ -2,14 +2,18 @@ import React, { useEffect, useState, useContext } from 'react';
 
 import { inTheLastWeek, inTheNextFortnight } from '../dateRanges';
 
-const WorksContext = React.createContext();
+const WorksContext = React.createContext({});
 
-export const RoadworksProvider = ({ children }) => {
-  const [roadworks, setRoadworks] = useState([]);
-  const [roads, setRoads] = useState([]);
-  const [selected, setSelected] = useState('');
-  const [searchText, setSearchText] = useState('');
-  const [centreEN, setCentreEN] = useState({ east: 0, north: 0 });
+interface RoadworksProviderProps {
+  children: JSX.Element | Array<JSX.Element>;
+}
+
+export const RoadworksProvider = ({ children }: RoadworksProviderProps) => {
+  const [roadworks, setRoadworks] = useState<Array<WorksItem>>([]);
+  const [roads, setRoads] = useState<Array<RoadIndex>>([]);
+  const [selected, setSelected] = useState<string>('');
+  const [searchText, setSearchText] = useState<string>('');
+  const [centreEN, setCentreEN] = useState<ENLocation>({ east: 0, north: 0 });
 
   const initialLoad = async () => {
     try {
@@ -19,25 +23,30 @@ export const RoadworksProvider = ({ children }) => {
       // Filter the roadworks so that
       //   (a) They start before 14 days time.
       //   (b) They haven't been over for more than a week.
-      const filteredRoadworks = roadworksData.filter(({ startDate, endDate }) => {
-        return inTheNextFortnight(startDate) && inTheLastWeek(endDate);
-      });
+      const filteredRoadworks = roadworksData.filter(
+        ({ startDate, endDate }: WorksItem) => {
+          return inTheNextFortnight(startDate) && inTheLastWeek(endDate);
+        }
+      );
 
       setRoadworks(filteredRoadworks);
 
       // Collect the unique roads and their index in the list
       let lastRoads = { roads: '', index: 0 };
 
-      const roadList = filteredRoadworks.reduce((acc, { roads }, index) => {
-        if (roads !== lastRoads.roads) {
-          const newValue = { roads, index };
+      const roadList = filteredRoadworks.reduce(
+        (acc: Array<RoadIndex>, { roads }: WorksItem, index: number) => {
+          if (roads !== lastRoads.roads) {
+            const newValue: RoadIndex = { roads, index };
 
-          acc.push(newValue);
-          lastRoads = newValue;
-        }
+            acc.push(newValue);
+            lastRoads = newValue;
+          }
 
-        return acc;
-      }, []);
+          return acc;
+        },
+        []
+      );
 
       setRoads(roadList);
       setSelected(roadList[0].roads); // Default to first of list
@@ -51,7 +60,7 @@ export const RoadworksProvider = ({ children }) => {
   }, []);
 
   const selectedRoadworks = () => {
-    let retval = [];
+    let retval: Array<WorksItem> = [];
 
     if (selected !== '') {
       const roadIndex = roads.findIndex(element => element.roads === selected);
@@ -74,7 +83,7 @@ export const RoadworksProvider = ({ children }) => {
     return retval;
   };
 
-  const state = {
+  const state: WorksState = {
     roadworks,
     roads,
     selected,
@@ -89,7 +98,7 @@ export const RoadworksProvider = ({ children }) => {
   return <WorksContext.Provider value={state}>{children}</WorksContext.Provider>;
 };
 
-export const useRoadworks = () => {
+export const useRoadworks = (): WorksState => {
   const context = useContext(WorksContext);
 
   if (context === undefined)
@@ -97,5 +106,5 @@ export const useRoadworks = () => {
       'useRoadworks() must be used within a RoadworksProvider block'
     );
 
-  return context;
+  return context as WorksState;
 };
