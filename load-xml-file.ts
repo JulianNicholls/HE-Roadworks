@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 const fs = require('fs');
 
 const { validate, parseRoadworks } = require('./load-xml');
@@ -14,7 +16,7 @@ if (process.argv[2].toLowerCase() === 'serve') {
 
 if (!filename) {
   console.error('No filename specified.');
-  exit(-1);
+  process.exit(-1);
 }
 
 const xmlData = fs.readFileSync(filename, 'utf-8');
@@ -32,7 +34,7 @@ const roadworks = parseRoadworks(xmlData);
 
 // Either serve it up at localhost:3050 or just print it.
 if (serving) {
-  app.get('/', (req, res, next) => {
+  app.get('/', (req: Request, res: Response) => {
     res.status(200).json(roadworks);
   });
 
