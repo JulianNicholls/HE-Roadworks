@@ -3,7 +3,7 @@ import { HTMLElement } from 'node-html-parser';
 const { parse: parseHTML } = require('node-html-parser');
 import axios from 'axios';
 
-const { validate, parseRoadworks } = require('./load-xml');
+import { validate, parseRoadworks } from './load-xml';
 
 const DATAFILE_PAGE =
   'https://data.gov.uk/dataset/highways_agency_planned_roadworks';
@@ -41,7 +41,7 @@ const main = async () => {
       } else {
         const href = links[0].attributes.href;
         // .xml OUGHT to be at the end, just after the date, however, sometimees
-        // there's a bad link...
+        // there's a bad link, like ...xml.xml
         const matchDate = href.match(/(\d{4})_(\d{2})_(\d{2})\.xml$/);
         if (!matchDate || matchDate.length < 4) {
           console.error('Bad link:', href);
