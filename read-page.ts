@@ -41,7 +41,9 @@ const main = async () => {
         console.error('Incorrect Links:', { links });
       } else {
         const href = links[0].attributes.href;
-        const matchDate = href.match(/(\d{4})_(\d{2})_(\d{2})\.xml$/);
+        // .xml OUGHT to be at the end, just after the date, however, sometimees
+        // there's a bad link...
+        const matchDate = href.match(/(\d{4})_(\d{2})_(\d{2})\.xml/);
         const textDate = matchDate.slice(1, 4).join('-');
 
         const publishedDate = new Date(textDate);
