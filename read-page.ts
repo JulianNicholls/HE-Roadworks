@@ -1,8 +1,7 @@
 import { HTMLElement } from 'node-html-parser';
 
-const fs = require('fs');
 const { parse: parseHTML } = require('node-html-parser');
-const axios = require('axios');
+import axios from 'axios';
 
 const { validate, parseRoadworks } = require('./load-xml');
 
@@ -20,7 +19,7 @@ const main = async () => {
 
   const root: HTMLElement = parseHTML(wholePage);
   const dataFileTRs: Array<HTMLElement> = root.querySelectorAll('tr.dgu-datafile');
-  const liveTRs = dataFileTRs.filter((tr: any) => {
+  const liveTRs = dataFileTRs.filter((tr: HTMLElement) => {
     return !tr.classNames.includes('js-show-more-datafiles');
   });
 
@@ -35,7 +34,7 @@ const main = async () => {
   }
 
   const dataFiles: Array<HrefRecord> = liveTRs.reduce(
-    (acc: Array<HrefRecord>, tr: any) => {
+    (acc: Array<HrefRecord>, tr: HTMLElement) => {
       const links: Array<HTMLElement> = tr.querySelectorAll('a');
       if (links.length !== 1) {
         console.error('Incorrect Links:', { links });
@@ -43,7 +42,11 @@ const main = async () => {
         const href = links[0].attributes.href;
         // .xml OUGHT to be at the end, just after the date, however, sometimees
         // there's a bad link...
-        const matchDate = href.match(/(\d{4})_(\d{2})_(\d{2})\.xml/);
+        const matchDate = href.match(/(\d{4})_(\d{2})_(\d{2})\.xml$/);
+        if (!matchDate || matchDate.length < 4) {
+          console.error('Bad link:', href);
+          return acc;
+        }
         const textDate = matchDate.slice(1, 4).join('-');
 
         const publishedDate = new Date(textDate);
