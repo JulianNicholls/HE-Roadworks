@@ -4,11 +4,7 @@ import { inTheLastWeek, inTheNextFortnight } from '../dateRanges';
 
 const WorksContext = React.createContext({});
 
-interface RoadworksProviderProps {
-  children: JSX.Element | Array<JSX.Element>;
-}
-
-export const RoadworksProvider = ({ children }: RoadworksProviderProps) => {
+export const RoadworksProvider = ({ children }: JSX.ElementChildrenAttribute) => {
   const [roadworks, setRoadworks] = useState<Array<WorksItem>>([]);
   const [roads, setRoads] = useState<Array<RoadIndex>>([]);
   const [selected, setSelected] = useState<string>('');
@@ -63,7 +59,7 @@ export const RoadworksProvider = ({ children }: RoadworksProviderProps) => {
     let retval: Array<WorksItem> = [];
 
     if (selected !== '') {
-      const roadIndex = roads.findIndex(element => element.roads === selected);
+      const roadIndex = roads.findIndex((element) => element.roads === selected);
       const max =
         roadIndex < roads.length - 1
           ? roads[roadIndex + 1].index

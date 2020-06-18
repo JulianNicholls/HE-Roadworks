@@ -25,6 +25,11 @@ ReactModal.defaultStyles = {
   },
 };
 
+interface LatLong {
+  lat: number;
+  lng: number;
+}
+
 const Pointer = (props: LatLong): JSX.Element => {
   return (
     <span className="pointer" role="img" aria-label="roadworks-location">
@@ -32,11 +37,6 @@ const Pointer = (props: LatLong): JSX.Element => {
     </span>
   );
 };
-
-interface LatLong {
-  lat: number;
-  lng: number;
-}
 
 interface MapModalProps {
   centre: ENLocation;

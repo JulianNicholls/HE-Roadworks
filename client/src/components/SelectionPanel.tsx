@@ -44,7 +44,12 @@ const SelectionPanel = () => {
     <section className="selection-panel">
       <div>
         <label htmlFor="road">Road</label>
-        <select id="road" onChange={changeRoad} value={selected}>
+        <select
+          className="select-css"
+          id="road"
+          onChange={changeRoad}
+          value={selected}
+        >
           <option value="">&nbsp;</option>
           {roads.map(({ roads }: RoadIndex, index: number) => (
             <option key={index} value={roads}>
@@ -59,7 +64,7 @@ const SelectionPanel = () => {
           type="search"
           id="location"
           value={location}
-          onChange={e => setLocation(e.target.value)}
+          onChange={(e) => setLocation(e.target.value)}
         />
       </div>
     </section>

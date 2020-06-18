@@ -1,4 +1,4 @@
-interface WorksItem {
+type WorksItem = {
   roads: string;
   description: string;
   startDate: string;
@@ -7,19 +7,19 @@ interface WorksItem {
   closureType: string;
   centreEasting: number;
   centreNorthing: number;
-}
+};
 
-interface ENLocation {
+type ENLocation = {
   east: number;
   north: number;
-}
+};
 
-interface RoadIndex {
+type RoadIndex = {
   roads: string;
   index: number;
-}
+};
 
-interface WorksState {
+type WorksState = {
   roadworks: Array<WorksItem>;
   roads: Array<RoadIndex>;
   selected: string;
@@ -29,4 +29,4 @@ interface WorksState {
   setSelected(string): void;
   setSearchText(string): void;
   setCentreEN(ENLocation): void;
-}
+};
