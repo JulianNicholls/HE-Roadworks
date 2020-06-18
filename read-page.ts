@@ -42,7 +42,7 @@ const main = async () => {
         const href = links[0].attributes.href;
         // .xml OUGHT to be at the end, just after the date, however, sometimees
         // there's a bad link, like ...xml.xml
-        const matchDate = href.match(/(\d{4})_(\d{2})_(\d{2})\.xml$/);
+        const matchDate = href.match(/(\d{4})_(\d{1,2})_(\d{1,2})\.xml$/);
         if (!matchDate || matchDate.length < 4) {
           console.error('Bad link:', href);
           return acc;
