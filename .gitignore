@@ -65,3 +65,6 @@ build
 
 road*.json
 exe*.json
+
+.vercel
+
