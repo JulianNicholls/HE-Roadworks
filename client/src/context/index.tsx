@@ -4,6 +4,8 @@ import { inTheLastWeek, inTheNextFortnight } from '../dateRanges';
 
 const WorksContext = React.createContext({});
 
+const roadworksUrl = 'https://nearby-proxy.vercel.app/roadworks.json';
+
 export const RoadworksProvider = ({ children }: JSX.ElementChildrenAttribute) => {
   const [roadworks, setRoadworks] = useState<Array<WorksItem>>([]);
   const [roads, setRoads] = useState<Array<RoadIndex>>([]);
@@ -13,7 +15,7 @@ export const RoadworksProvider = ({ children }: JSX.ElementChildrenAttribute) =>
 
   const initialLoad = async () => {
     try {
-      const response = await fetch('/data/roadworks.json');
+      const response = await fetch(roadworksUrl);
       const roadworksData = await response.json();
 
       // Filter the roadworks so that
