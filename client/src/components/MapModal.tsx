@@ -5,8 +5,7 @@ import LoadingPanel from './LoadingPanel';
 import ReactModal from 'react-modal';
 import RoadworksMap from 'google-map-react';
 
-const nearbySite = `http://nearby.org.uk/api/convert.php?key=${process.env.REACT_APP_NEARBY_KEY}&output=text&p=`;
-const openProxy = 'https://cors-anywhere.herokuapp.com';
+const nearbySite = `https://nearby-proxy.vercel.app/api/getLatLong?place=`;
 
 ReactModal.setAppElement('#root');
 
@@ -54,22 +53,11 @@ const MapModal = ({ centre }: MapModalProps) => {
       setLoading(true);
 
       try {
-        fullURL = `${openProxy}/${nearbySite}${centre.east},${centre.north}`;
+        fullURL = `${nearbySite}${centre.east},${centre.north}`;
         response = await axios.get(fullURL);
 
         if (response.status === 200) {
-          const { lat, lng } = response.data.split('\n').reduce(
-            (coords: LatLong, line: string) => {
-              if (line.startsWith('ll')) {
-                const parts: Array<string> = line.split(',');
-                return { lat: parseFloat(parts[2]), lng: parseFloat(parts[3]) };
-              }
-
-              return coords;
-            },
-            { lat: 0, lng: 0 }
-          );
-
+          const { lat, lng } = response.data;
           setMapCentre({ lat, lng });
           setLoading(false);
           setOpen(true);
