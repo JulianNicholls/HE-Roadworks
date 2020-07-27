@@ -91,7 +91,7 @@ const MapModal = ({ centre }: MapModalProps) => {
             <RoadworksMap
               bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS_KEY! }}
               defaultCenter={mapCentre}
-              defaultZoom={15}
+              defaultZoom={14}
             >
               <Pointer {...mapCentre} />
             </RoadworksMap>
