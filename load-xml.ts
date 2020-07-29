@@ -88,7 +88,7 @@ const parserOptions = {
   attributeNamePrefix: '', // Don't prefix attributes
   ignoreAttributes: false, // Collect attributes
   ignoreNameSpace: true, // Throw away the namespaces
-  AllowBooleanAttributes: true, // I'm not sure there are any
+  allowBooleanAttributes: true, // I'm not sure there are any
   parseAttributeValue: true, // Parse out attribute values to Number etc
 };
 
