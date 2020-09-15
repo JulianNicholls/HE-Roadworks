@@ -10,3 +10,11 @@ if [ -z "$go" -o "$go" = "y" -o "$go" = "Y" ]; then
   cd ~/sources/serverless
   vercel --prod
 fi
+
+read -p "Check in new roadworks file? [Y/n] " go
+if [ -z "$go" -o "$go" = "y" -o "$go" = "Y" ]; then
+  cd ~/sources/serverless
+  git add roadworks.json
+  git commit -m "Latest roadworks $DATE"
+fi
+

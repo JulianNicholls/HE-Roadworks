@@ -198,6 +198,8 @@ nav a:hover {
 	border-color: #aaa;
 }
 
+/***************************************************************************/
+
 article {
   background: var(--motorway);  /* Assume a motorway */
   border: 5px solid white;
