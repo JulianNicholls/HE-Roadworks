@@ -14,7 +14,7 @@ const Introduction = (): JSX.Element => {
       <p>
         In 2011, the UK's{' '}
         <a href={dftPage} title="DfT Site">
-          Department for Transport (DfT)
+          Department&nbsp;for&nbsp;Transport&nbsp;(DfT)
         </a>{' '}
         began to issue datasets for public use under the{' '}
         <a href={oglPage} title="Usage Licence">
