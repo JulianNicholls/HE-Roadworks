@@ -73,8 +73,11 @@ export const RoadworksProvider = ({ children }: JSX.ElementChildrenAttribute) =>
     } else if (searchText !== '') {
       const st = searchText.toLocaleLowerCase();
 
-      retval = roadworks.filter(({ description }) =>
-        description.toLocaleLowerCase().includes(st)
+      retval = roadworks.filter(
+        ({ description, expectedDelay, closureType }) =>
+          description.toLocaleLowerCase().includes(st) ||
+          expectedDelay.toLocaleLowerCase().includes(st) ||
+          closureType.toLocaleLowerCase().includes(st)
       );
     }
 
