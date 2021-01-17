@@ -1,11 +1,11 @@
 @font-face {
   font-family: "Motorway Permanent";
-  src: url("/data/Motorway Permanent.ttf");
+  src: url("./data/Motorway Permanent.ttf");
 }
 
 @font-face {
   font-family: "Transport Medium";
-  src: url("/data/Transport Medium.ttf");
+  src: url("./data/Transport Medium.ttf");
 }
 
 :root {
@@ -17,7 +17,7 @@
   --lighter: hsl(0, 0%, 95%);
   --link: #0e3ea0;
 
-  --a-road: #134A22;
+  --a-road: #134a22;
   --a-road-text: #f8ae25;
   --highlight: #ffff88;
   --date-highlight: #ffee00;
