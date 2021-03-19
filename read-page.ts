@@ -18,7 +18,7 @@ const main = async () => {
   const wholePage = await loadPage(DATAFILE_PAGE);
 
   const root: HTMLElement = parseHTML(wholePage);
-  const dataFileTRs: Array<HTMLElement> = root.querySelectorAll('tr.dgu-datafile');
+  const dataFileTRs: Array<HTMLElement> = root.querySelectorAll('tr.js-datafile-visible');
   const liveTRs = dataFileTRs.filter((tr: HTMLElement) => {
     return !tr.classNames.includes('js-show-more-datafiles');
   });
