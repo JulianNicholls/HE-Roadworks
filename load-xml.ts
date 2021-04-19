@@ -1,7 +1,6 @@
 import parser, { ValidationError } from 'fast-xml-parser';
 
 type XMLString = string;
-type JSONString = string;
 
 interface Replacement {
   regex: RegExp;
