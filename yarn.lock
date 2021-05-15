@@ -60,10 +60,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.13.tgz#ee1128e881b874c371374c1f72201893616417c9"
   integrity sha512-rouEWBImiRaSJsVA+ITTFM6ZxibuAlTuNOCyxVbwreu6k6+ujs7DfnU9o+PShFhET78pMBl3eH+AGSI5eOTkPA==
 
-"@types/node@^14.14.37":
-  version "14.14.37"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.37.tgz#a3dd8da4eb84a996c36e331df98d82abd76b516e"
-  integrity sha512-XYmBiy+ohOR4Lh5jE379fV2IU+6Jn4g5qASinhitfyO71b/sCo6MKsMLF5tc7Zf2CE8hViVQyYSobJNke8OvUw==
+"@types/node@^15.3.0":
+  version "15.3.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.3.0.tgz#d6fed7d6bc6854306da3dea1af9f874b00783e26"
+  integrity sha512-8/bnjSZD86ZfpBsDlCIkNXIvm+h6wi9g7IqL+kmFkQ+Wvu3JrasgLElfiPgoo8V8vVfnEi0QVS12gbl94h9YsQ==
 
 "@types/qs@*":
   version "6.9.3"
@@ -83,10 +83,10 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
-"@vercel/node@^1.9.1":
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/@vercel/node/-/node-1.9.1.tgz#55c079a469208560fd3f9f186cb68a504c4a10a1"
-  integrity sha512-sZIEk6UtJhbW4qRSCTnTWnGOT7UR6ZrhhSvK6z9AAS/BRc+Jz1/nbwPlYjT7HjZySo32VAwpeq2VHOd3hyxKGw==
+"@vercel/node@^1.10.0":
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/@vercel/node/-/node-1.10.0.tgz#98683c005da6f9ab0f21696409c520baffd4cb4a"
+  integrity sha512-11FIFoF4v9m/jAOSamwBDMsS2yIDa0fSnVhR70bbcUdBcu3BGGMCpg+jpA6rvkQSOa/WbTRvvu9hFh5bOsZxrw==
   dependencies:
     "@types/node" "*"
     ts-node "8.9.1"
@@ -733,10 +733,10 @@ negotiator@0.6.2:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.2.tgz#feacf7ccf525a77ae9634436a64883ffeca346fb"
   integrity sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw==
 
-node-html-parser@3:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-3.1.4.tgz#6c0e21005bbee1186c2fd917a3fa4ddbf2533bc4"
-  integrity sha512-IzCm3eDPcUXESZqui+GRsOl93KUaz9Pp1WN0x5wd9GBaTQXHCGof093+V36vg8dIOoIMkgGAKbVSZPikgL+NOQ==
+node-html-parser@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-3.3.0.tgz#6009e52c7cde40c43edcc21116f6cf505129196b"
+  integrity sha512-grr0KoPA0QDR8nROXr01M5LvpX21ncnyI+Z0HO9JyevYzejS80c3J5t/YNRhBGPHp/EI26bo0NZRRDctxNgC+g==
   dependencies:
     css-select "^3.1.2"
     he "1.2.0"
