@@ -2,7 +2,7 @@
 
 # cd /home/julian/sources/react/roadworks
 DATE=`date +%Y-%m-%d`
-ts-node read-page.ts >"roadworks-$DATE.json"
+npx ts-node read-page.ts >"roadworks-$DATE.json"
 cp "roadworks-$DATE.json" ~/sources/serverless/roadworks.json
 
 read -p "Update roadworks online? [Y/n] " go

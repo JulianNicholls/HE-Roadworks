@@ -102,47 +102,47 @@ type XMLRoad = XMLSingleRoad | XMLRoadList;
 export const parseRoadworks = (xmlData: XMLString) => {
   const jsonData = parser.parse(xmlData, parserOptions);
 
-  const rawData = jsonData.Report.HE_PLANNED_ROADWORKS.HE_PLANNED_WORKS_Collection.HE_PLANNED_WORKS.reduce(
-    (works: Array<Road>, cur: any) => {
-      if (
-        cur.EASTNORTH &&
-        cur.EASTNORTH.Report &&
-        cur.EASTNORTH.Report.EASTINGNORTHING // Sometimes (once?) an empty string
-      ) {
-        const eastNorth =
-          cur.EASTNORTH.Report.EASTINGNORTHING.EASTNORTH_Collection.EASTNORTH;
+  const rawData =
+    jsonData.Report.HE_PLANNED_ROADWORKS.HE_PLANNED_WORKS_Collection.HE_PLANNED_WORKS.reduce(
+      (works: Array<Road>, cur: any) => {
+        if (
+          cur.EASTNORTH &&
+          cur.EASTNORTH.Report &&
+          cur.EASTNORTH.Report.EASTINGNORTHING // Sometimes (once?) an empty string
+        ) {
+          const eastNorth = cur.EASTNORTH.Report.EASTINGNORTHING.EASTNORTH_Collection.EASTNORTH;
 
-        let road_data: XMLRoad = cur.ROADS.Report.ROADS.ROAD_Collection.ROAD;
+          let road_data: XMLRoad = cur.ROADS.Report.ROADS.ROAD_Collection.ROAD;
 
-        // Turn roads into a string if there is more than one road
+          // Turn roads into a string if there is more than one road
 
-        const roads: string =
-          (road_data as XMLSingleRoad).ROAD_NUMBER ||
-          (road_data as XMLRoadList)
-            .map(({ ROAD_NUMBER }: XMLSingleRoad) => ROAD_NUMBER)
-            .join(' ');
+          const roads: string =
+            (road_data as XMLSingleRoad).ROAD_NUMBER ||
+            (road_data as XMLRoadList)
+              .map(({ ROAD_NUMBER }: XMLSingleRoad) => ROAD_NUMBER)
+              .join(' ');
 
-        // Clean up the description
-        const description = cleanup(cur.DESCRIPTION);
+          // Clean up the description
+          const description = cleanup(cur.DESCRIPTION);
 
-        const item: Road = {
-          startDate: new Date(cur.SDATE),
-          endDate: new Date(cur.EDATE),
-          expectedDelay: cur.EXPDEL,
-          description,
-          closureType: cur.CLOSURE_TYPE,
-          centreEasting: eastNorth.CENTRE_EASTING,
-          centreNorthing: eastNorth.CENTRE_NORTHING,
-          roads,
-        };
+          const item: Road = {
+            startDate: new Date(cur.SDATE),
+            endDate: new Date(cur.EDATE),
+            expectedDelay: cur.EXPDEL,
+            description,
+            closureType: cur.CLOSURE_TYPE,
+            centreEasting: eastNorth.CENTRE_EASTING,
+            centreNorthing: eastNorth.CENTRE_NORTHING,
+            roads,
+          };
 
-        return [...works, item];
-      }
+          return [...works, item];
+        }
 
-      return works;
-    },
-    []
-  );
+        return works;
+      },
+      []
+    );
 
   return rawData.sort(compare); // Sort the roads
 };
