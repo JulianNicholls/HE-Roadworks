@@ -23,7 +23,7 @@
     "axios": "^1.13.5",
     "express": "^4.20.0",
     "fast-html-parser": "^1.0.1",
-    "fast-xml-parser": "^5.3.6",
+    "fast-xml-parser": "^5.3.8",
     "node-html-parser": "^3.3.0",
     "serve": "^11.3.0"
   },
